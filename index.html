@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Moja Grecja: projekty</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root { --aegean:#0d5eaf; --deep:#0a2a4f; --gold:#f2b632; }
+  * { box-sizing:border-box; margin:0; }
+  html, body { height:100%; }
+  body { display:flex; flex-direction:column; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; background:#e9f1fa; }
+  [hidden] { display:none !important; }
+
+  /* Pasek z meandrem i zakładkami */
+  .meander { height:12px; flex:none; background-color:var(--aegean);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12' viewBox='0 0 24 12'%3E%3Cpath d='M0 10H18V2H6V7H12' fill='none' stroke='%23f2b632' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
+    background-repeat:repeat-x; }
+  nav { flex:none; display:flex; align-items:center; gap:10px; flex-wrap:wrap; background:var(--deep); color:#fff;
+    padding:10px 16px; padding-top:max(10px, env(safe-area-inset-top)); }
+  nav h1 { font-size:1.05rem; margin-right:auto; }
+  .tabs { display:flex; gap:6px; }
+  .tab { font-family:inherit; font-weight:700; font-size:.9rem; color:#fff; background:transparent; border:2px solid #36598a; border-radius:999px; padding:8px 16px; cursor:pointer; }
+  .tab:hover { border-color:var(--gold); }
+  .tab[aria-selected="true"] { background:var(--gold); border-color:var(--gold); color:var(--deep); }
+  .tab:focus-visible { outline:3px solid #7fb2e8; outline-offset:2px; }
+
+  iframe { flex:1; width:100%; border:0; background:#e9f1fa; }
+</style>
+</head>
+<body>
+<div class="meander" aria-hidden="true"></div>
+<nav>
+  <h1>Moja Grecja</h1>
+  <div class="tabs" role="tablist" aria-label="Projekty"><button class="tab" type="button" role="tab" data-target="przewodnik" aria-selected="true">Przewodnik</button><button class="tab" type="button" role="tab" data-target="memory" aria-selected="false">Memory</button><button class="tab" type="button" role="tab" data-target="quiz" aria-selected="false">Quiz</button></div>
+</nav>
+<iframe id="przewodnik" title="Przewodnik" srcdoc="<!DOCTYPE html>
+<html lang=&quot;pl&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;>
+<title>Przewodnik po Grecji</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;family=Noto+Serif:wght@700&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  /* =========================================================
+     1. ZMIENNE I USTAWIENIA OGÓLNE
+     ========================================================= */
+  :root {
+    --aegean: #0d5eaf;
+    --aegean-deep: #0a2a4f;
+    --gold: #f2b632;
+    --gold-deep: #b9820a;
+    --marble: #f6f8fb;
+    --sea-mist: #dce8f5;
+    --muted: #4d6785;
+    --serif: &quot;Noto Serif&quot;, Georgia, serif;
+    --sans: &quot;Manrope&quot;, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif;
+  }
+
+  /* Bezpieczne marginesy na telefonach i tabletach (notch, pasek systemowy) */
+  :root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+  * { box-sizing: border-box; margin: 0; }
+  [hidden] { display: none !important; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--aegean-deep);
+    background: linear-gradient(180deg, #e9f1fa 0%, #cfe0f3 100%) fixed;
+    min-height: 100vh;
+  }
+  body.modal-open { overflow: hidden; }
+
+  button { font-family: inherit; }
+  :focus-visible { outline: 3px solid #7fb2e8; outline-offset: 2px; }
+
+  /* =========================================================
+     2. NAGŁÓWEK Z MEANDREM
+     ========================================================= */
+  .meander {
+    height: 24px;
+    background-color: var(--aegean);
+    background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M0 20H18V6H6V14H12V10M18 20H24' fill='none' stroke='%23f2b632' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E&quot;);
+    background-repeat: repeat-x;
+  }
+  header { background: var(--aegean-deep); color: #fff; text-align: center; padding: 34px 20px 38px; }
+  header h1 { font-family: var(--serif); font-size: clamp(2rem, 7vw, 3rem); line-height: 1.15; }
+  header p { margin: 12px auto 0; max-width: 46ch; color: #bcd3ec; line-height: 1.6; }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 18px 48px; }
+
+  /* =========================================================
+     3. WYSZUKIWARKA I FILTRY
+     ========================================================= */
+  .search {
+    width: 100%;
+    font: 500 1rem var(--sans);
+    color: var(--aegean-deep);
+    padding: 14px 18px;
+    border: 2px solid var(--sea-mist);
+    border-radius: 14px;
+    background: #fff;
+  }
+  .search:focus { border-color: var(--aegean); outline: none; box-shadow: 0 0 0 4px rgba(13, 94, 175, .15); }
+
+  .filters { display: flex; gap: 8px; margin: 14px 0 8px; overflow-x: auto; padding-bottom: 6px; }
+  .chip {
+    flex: none;
+    font: 700 .9rem var(--sans);
+    color: var(--aegean);
+    background: #fff;
+    border: 2px solid var(--sea-mist);
+    border-radius: 999px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .chip:hover { border-color: var(--aegean); }
+  .chip[aria-pressed=&quot;true&quot;] { background: var(--aegean); border-color: var(--aegean); color: #fff; }
+
+  .count { color: var(--muted); font-size: .9rem; margin-bottom: 16px; }
+
+  /* =========================================================
+     4. SIATKA KART
+     ========================================================= */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+
+  .card { position: relative; background: #fff; border-radius: 20px; box-shadow: 0 10px 26px rgba(10, 42, 79, .12); overflow: hidden; transition: transform .2s, box-shadow .2s; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(10, 42, 79, .18); }
+
+  .card-open { display: block; width: 100%; padding: 0; border: 0; background: none; text-align: left; cursor: pointer; color: inherit; }
+  .card-art { height: 130px; display: grid; place-items: center; font-size: 3.4rem; }
+  .card-body { padding: 16px 18px 20px; }
+  .card-body h2 { font-family: var(--serif); font-size: 1.25rem; color: var(--aegean); }
+  .region { font-size: .85rem; color: var(--muted); margin: 4px 0 10px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+  .badge { font-size: .75rem; font-weight: 700; color: var(--gold-deep); background: #fdf3d9; padding: 4px 10px; border-radius: 999px; }
+
+  /* Przycisk serca na karcie */
+  .fav-mini {
+    position: absolute; top: 10px; right: 10px;
+    width: 40px; height: 40px;
+    border: 0; border-radius: 50%;
+    background: rgba(255, 255, 255, .92);
+    font-size: 1.25rem; line-height: 1;
+    color: #8aa0b8;
+    cursor: pointer;
+    transition: transform .15s;
+  }
+  .fav-mini:hover { transform: scale(1.1); }
+  .fav-mini.on { color: var(--gold-deep); }
+
+  .empty { text-align: center; padding: 40px 10px; color: var(--muted); line-height: 1.6; }
+
+  /* =========================================================
+     5. MODAL (element <dialog>)
+     ========================================================= */
+  dialog {
+    width: min(620px, calc(100% - 28px));
+    max-height: calc(100vh - 28px);
+    padding: 0;
+    border: 0;
+    border-radius: 24px;
+    background: var(--marble);
+    color: var(--aegean-deep);
+    overflow: auto;
+    box-shadow: 0 30px 70px rgba(10, 42, 79, .4);
+  }
+  dialog[open] { animation: rise .25s ease-out; }
+  dialog::backdrop { background: rgba(10, 42, 79, .55); }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+
+  .modal-art { height: 150px; display: grid; place-items: center; font-size: 4.2rem; position: relative; }
+  .close {
+    position: absolute; top: 12px; right: 12px;
+    width: 40px; height: 40px; border: 0; border-radius: 50%;
+    background: rgba(255, 255, 255, .92); color: var(--aegean-deep);
+    font-size: 1.3rem; cursor: pointer;
+  }
+  .modal-body { padding: 22px 24px 26px; }
+  .modal-body h2 { font-family: var(--serif); font-size: 1.8rem; color: var(--aegean); }
+  .modal-body .region { margin-bottom: 12px; }
+  .desc { line-height: 1.7; margin: 16px 0; }
+  .fact { background: #fdf3d9; border-left: 5px solid var(--gold); border-radius: 12px; padding: 14px 16px; line-height: 1.6; margin-bottom: 16px; }
+  .fact strong { display: block; color: var(--gold-deep); margin-bottom: 4px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .tag { font-size: .85rem; color: var(--aegean); background: var(--sea-mist); padding: 5px 12px; border-radius: 999px; }
+
+  .fav-btn {
+    font: 700 1rem var(--sans);
+    width: 100%;
+    padding: 14px;
+    border: 2px solid var(--gold);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--aegean-deep);
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .fav-btn:hover { background: #fdf3d9; }
+  .fav-btn[aria-pressed=&quot;true&quot;] { background: var(--gold); }
+
+  footer { text-align: center; color: var(--muted); font-size: .85rem; padding-bottom: 30px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: .01s !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class=&quot;meander&quot; aria-hidden=&quot;true&quot;></div>
+<header>
+  <h1>Przewodnik po Grecji</h1>
+  <p>Miejsca, smaki i widoki, które warto zobaczyć. Wybierz kategorię, wyszukaj miejsce i zapisz swoje ulubione.</p>
+</header>
+
+<main class=&quot;wrap&quot;>
+  <input class=&quot;search&quot; id=&quot;search&quot; type=&quot;search&quot; aria-label=&quot;Szukaj miejsca&quot; placeholder=&quot;Szukaj miejsca, np. Santorini…&quot; autocomplete=&quot;off&quot;>
+
+  <div class=&quot;filters&quot; id=&quot;filters&quot; role=&quot;group&quot; aria-label=&quot;Filtry kategorii&quot;></div>
+  <p class=&quot;count&quot; id=&quot;count&quot; aria-live=&quot;polite&quot;></p>
+
+  <section class=&quot;grid&quot; id=&quot;grid&quot; aria-label=&quot;Lista miejsc&quot;></section>
+  <p class=&quot;empty&quot; id=&quot;empty&quot; hidden></p>
+</main>
+
+<footer>Zbudowano w czystym HTML, CSS i JavaScript.</footer>
+
+<!-- Okno szczegółów miejsca -->
+<dialog id=&quot;modal&quot; aria-labelledby=&quot;m-title&quot;>
+  <div class=&quot;modal-art&quot; id=&quot;m-art&quot;>
+    <button class=&quot;close&quot; id=&quot;m-close&quot; type=&quot;button&quot; aria-label=&quot;Zamknij&quot;>✕</button>
+    <span id=&quot;m-emoji&quot; aria-hidden=&quot;true&quot;></span>
+  </div>
+  <div class=&quot;modal-body&quot;>
+    <h2 id=&quot;m-title&quot;></h2>
+    <p class=&quot;region&quot; id=&quot;m-region&quot;></p>
+    <div class=&quot;badges&quot; id=&quot;m-cats&quot;></div>
+    <p class=&quot;desc&quot; id=&quot;m-desc&quot;></p>
+    <div class=&quot;fact&quot;><strong>Ciekawostka</strong><span id=&quot;m-fact&quot;></span></div>
+    <div class=&quot;tags&quot; id=&quot;m-tags&quot;></div>
+    <button class=&quot;fav-btn&quot; id=&quot;m-fav&quot; type=&quot;button&quot; aria-pressed=&quot;false&quot;></button>
+  </div>
+</dialog>
+
+<script>
+(() => {
+  &quot;use strict&quot;;
+
+  /* =========================================================
+     1. DANE: miejsca (edytuj lub dodawaj własne wpisy)
+     ========================================================= */
+  const PLACES = [
+    {
+      id: &quot;akropol&quot;, name: &quot;Akropol w Atenach&quot;, region: &quot;Ateny, Attyka&quot;,
+      categories: [&quot;Zabytki&quot;], emoji: &quot;🏛️&quot;, colors: [&quot;#0d5eaf&quot;, &quot;#6fa8e0&quot;],
+      desc: &quot;Skalne wzgórze nad Atenami, na którym stoją najsłynniejsze budowle starożytnej Grecji, m.in. Partenon, Erechtejon i Propyleje. Najlepiej odwiedzić go rano lub późnym popołudniem, gdy jest chłodniej i mniej tłoczno.&quot;,
+      fact: &quot;Partenon zbudowano w V wieku p.n.e. jako świątynię Ateny. Akropol znajduje się na Liście Światowego Dziedzictwa UNESCO od 1987 roku.&quot;,
+      tags: [&quot;Starożytność&quot;, &quot;UNESCO&quot;, &quot;Ateny&quot;, &quot;Architektura&quot;]
+    },
+    {
+      id: &quot;santorini&quot;, name: &quot;Santorini&quot;, region: &quot;Cyklady, Morze Egejskie&quot;,
+      categories: [&quot;Przyroda&quot;, &quot;Plaże&quot;], emoji: &quot;🌅&quot;, colors: [&quot;#1d7fd1&quot;, &quot;#f2b632&quot;],
+      desc: &quot;Wyspa o kształcie półksiężyca, powstała wokół zalanej morzem kaldery. Znana z białych domów, niebieskich kopuł i zachodów słońca w miejscowości Oia. Są tu też plaże o czarnym i czerwonym piasku.&quot;,
+      fact: &quot;Potężna erupcja wulkanu na wyspie Thera około 1600 roku p.n.e. ukształtowała dzisiejszą kalderę.&quot;,
+      tags: [&quot;Kaldera&quot;, &quot;Zachód słońca&quot;, &quot;Cyklady&quot;, &quot;Wulkan&quot;]
+    },
+    {
+      id: &quot;meteory&quot;, name: &quot;Meteory&quot;, region: &quot;Kalambaka, Tesalia&quot;,
+      categories: [&quot;Zabytki&quot;, &quot;Przyroda&quot;], emoji: &quot;⛰️&quot;, colors: [&quot;#0a2a4f&quot;, &quot;#7a8fa8&quot;],
+      desc: &quot;Wysokie skalne iglice, na których szczytach stoją średniowieczne klasztory prawosławne. Do dziś działa tu sześć z nich, a widoki na dolinę Pinios zapierają dech w piersiach.&quot;,
+      fact: &quot;Nazwa „Meteora” oznacza po grecku „zawieszone w powietrzu”. Kompleks jest wpisany na Listę UNESCO od 1988 roku.&quot;,
+      tags: [&quot;Klasztory&quot;, &quot;UNESCO&quot;, &quot;Wspinaczka&quot;, &quot;Widoki&quot;]
+    },
+    {
+      id: &quot;delfy&quot;, name: &quot;Delfy&quot;, region: &quot;Fokida, Grecja Środkowa&quot;,
+      categories: [&quot;Zabytki&quot;], emoji: &quot;🏺&quot;, colors: [&quot;#2a6fb5&quot;, &quot;#d9c58a&quot;],
+      desc: &quot;Starożytne sanktuarium Apollina u stóp góry Parnas. Przez wieki przybywali tu władcy i zwykli ludzie, by zasięgnąć rady wyroczni. Na terenie stanowiska stoją m.in. teatr, stadion i Skarbiec Ateńczyków.&quot;,
+      fact: &quot;Starożytni Grecy uważali Delfy za „pępek świata”. Pamiątką po tym wierzeniu jest kamień zwany omfalosem.&quot;,
+      tags: [&quot;Wyrocznia&quot;, &quot;Apollo&quot;, &quot;UNESCO&quot;, &quot;Mitologia&quot;]
+    },
+    {
+      id: &quot;navagio&quot;, name: &quot;Zatoka Navagio&quot;, region: &quot;Zakynthos, Wyspy Jońskie&quot;,
+      categories: [&quot;Plaże&quot;, &quot;Przyroda&quot;], emoji: &quot;🏖️&quot;, colors: [&quot;#13a3c7&quot;, &quot;#e9f6f9&quot;],
+      desc: &quot;Mała plaża otoczona wysokimi białymi klifami, z turkusową wodą. Z klifowego punktu widokowego widać całą zatokę, a na plażę najłatwiej dostać się łodzią.&quot;,
+      fact: &quot;Zatoka nazywana jest też Plażą Wraku. Na piasku leży statek Panagiotis, który osiadł tu w 1980 roku.&quot;,
+      tags: [&quot;Wrak&quot;, &quot;Wyspy Jońskie&quot;, &quot;Klify&quot;, &quot;Fotografia&quot;]
+    },
+    {
+      id: &quot;elafonisi&quot;, name: &quot;Elafonisi&quot;, region: &quot;Kreta, Chania&quot;,
+      categories: [&quot;Plaże&quot;], emoji: &quot;🌊&quot;, colors: [&quot;#3fb8c9&quot;, &quot;#f4b6c2&quot;],
+      desc: &quot;Laguna z płytką, ciepłą wodą i piaskiem, który w niektórych miejscach ma różowawy odcień. Przy niskim stanie wody można przejść pieszo na pobliską wysepkę.&quot;,
+      fact: &quot;Różowy odcień piasku pochodzi od drobnych fragmentów muszli i koralowców.&quot;,
+      tags: [&quot;Kreta&quot;, &quot;Różowy piasek&quot;, &quot;Laguna&quot;, &quot;Kąpiele&quot;]
+    },
+    {
+      id: &quot;gyros&quot;, name: &quot;Gyros i souvlaki&quot;, region: &quot;Cała Grecja&quot;,
+      categories: [&quot;Jedzenie&quot;], emoji: &quot;🥙&quot;, colors: [&quot;#f2b632&quot;, &quot;#f08a3c&quot;],
+      desc: &quot;Klasyczny grecki street food. Gyros to mięso pieczone na pionowym rożnie, podawane w pita z pomidorem, cebulą i tzatzikami. Souvlaki to kawałki mięsa grillowane na szaszłyku.&quot;,
+      fact: &quot;Słowo „gyros” pochodzi od greckiego określenia obrotu. Odnosi się do mięsa, które obraca się na rożnie.&quot;,
+      tags: [&quot;Street food&quot;, &quot;Tzatziki&quot;, &quot;Pita&quot;, &quot;Tanio&quot;]
+    },
+    {
+      id: &quot;musaka&quot;, name: &quot;Musaka&quot;, region: &quot;Cała Grecja&quot;,
+      categories: [&quot;Jedzenie&quot;], emoji: &quot;🍆&quot;, colors: [&quot;#6b3fa0&quot;, &quot;#e9b872&quot;],
+      desc: &quot;Zapiekanka z warstw bakłażana, ziemniaków i mielonego mięsa, przykryta kremowym sosem beszamelowym. Podawana na ciepło, najlepiej smakuje w rodzinnych tawernach.&quot;,
+      fact: &quot;Grecką wersję z sosem beszamelowym spopularyzował w pierwszej połowie XX wieku kucharz Nikolaos Tselementes.&quot;,
+      tags: [&quot;Tawerna&quot;, &quot;Bakłażan&quot;, &quot;Danie główne&quot;, &quot;Tradycja&quot;]
+    }
+  ];
+
+  const CATEGORIES = [&quot;Zabytki&quot;, &quot;Plaże&quot;, &quot;Przyroda&quot;, &quot;Jedzenie&quot;];
+  const STORAGE_KEY = &quot;przewodnik-grecja-ulubione&quot;;
+
+  /* =========================================================
+     2. ELEMENTY STRONY
+     ========================================================= */
+  const $ = (id) => document.getElementById(id);
+  const gridEl = $(&quot;grid&quot;), filtersEl = $(&quot;filters&quot;), countEl = $(&quot;count&quot;), emptyEl = $(&quot;empty&quot;), searchEl = $(&quot;search&quot;);
+  const modal = $(&quot;modal&quot;);
+
+  /* =========================================================
+     3. STAN APLIKACJI
+     ========================================================= */
+  let activeFilter = &quot;Wszystkie&quot;;   // &quot;Wszystkie&quot;, nazwa kategorii lub &quot;Ulubione&quot;
+  let query = &quot;&quot;;                   // tekst z wyszukiwarki
+  let favorites = loadFavorites();  // Set z identyfikatorami ulubionych
+  let openId = null;                // miejsce otwarte w oknie
+
+  /* =========================================================
+     4. ULUBIONE (localStorage z zabezpieczeniem na błędy)
+     ========================================================= */
+  function loadFavorites() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      return new Set(Array.isArray(raw) ? raw : []);
+    } catch {
+      return new Set();
+    }
+  }
+  function saveFavorites() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...favorites])); } catch { /* brak zapisu – aplikacja działa dalej */ }
+  }
+  function toggleFavorite(id) {
+    if (favorites.has(id)) favorites.delete(id);
+    else favorites.add(id);
+    saveFavorites();
+    render();
+    if (openId === id) renderFavButton();
+  }
+
+  /* =========================================================
+     5. FUNKCJE POMOCNICZE
+     ========================================================= */
+
+  // Ujednolicenie tekstu do wyszukiwania: małe litery, bez polskich znaków
+  function normalize(text) {
+    return text.toLowerCase().replace(/ł/g, &quot;l&quot;).normalize(&quot;NFD&quot;).replace(/[\u0300-\u036f]/g, &quot;&quot;);
+  }
+
+  function gradient(colors) {
+    return `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
+  }
+
+  // Zwraca miejsca pasujące do filtra i wyszukiwarki
+  function getVisible() {
+    const q = normalize(query.trim());
+    return PLACES.filter((p) => {
+      const matchesFilter =
+        activeFilter === &quot;Wszystkie&quot; ? true :
+        activeFilter === &quot;Ulubione&quot; ? favorites.has(p.id) :
+        p.categories.includes(activeFilter);
+      const matchesQuery = !q || normalize(p.name + &quot; &quot; + p.region).includes(q);
+      return matchesFilter &amp;&amp; matchesQuery;
+    });
+  }
+
+  /* =========================================================
+     6. RENDEROWANIE
+     ========================================================= */
+  function renderFilters() {
+    const names = [&quot;Wszystkie&quot;, ...CATEGORIES, &quot;Ulubione&quot;];
+    filtersEl.innerHTML = &quot;&quot;;
+    names.forEach((name) => {
+      const btn = document.createElement(&quot;button&quot;);
+      btn.type = &quot;button&quot;;
+      btn.className = &quot;chip&quot;;
+      btn.textContent = name === &quot;Ulubione&quot; ? `★ Ulubione (${favorites.size})` : name;
+      btn.setAttribute(&quot;aria-pressed&quot;, String(name === activeFilter));
+      btn.addEventListener(&quot;click&quot;, () => { activeFilter = name; render(); });
+      filtersEl.appendChild(btn);
+    });
+  }
+
+  function renderCards() {
+    const list = getVisible();
+    gridEl.innerHTML = &quot;&quot;;
+
+    list.forEach((p) => {
+      const isFav = favorites.has(p.id);
+      const card = document.createElement(&quot;article&quot;);
+      card.className = &quot;card&quot;;
+      card.innerHTML = `
+        <button class=&quot;card-open&quot; type=&quot;button&quot; aria-label=&quot;Pokaż szczegóły: ${p.name}&quot;>
+          <div class=&quot;card-art&quot; style=&quot;background:${gradient(p.colors)}&quot; aria-hidden=&quot;true&quot;>${p.emoji}</div>
+          <div class=&quot;card-body&quot;>
+            <h2>${p.name}</h2>
+            <p class=&quot;region&quot;>${p.region}</p>
+            <div class=&quot;badges&quot;>${p.categories.map((c) => `<span class=&quot;badge&quot;>${c}</span>`).join(&quot;&quot;)}</div>
+          </div>
+        </button>
+        <button class=&quot;fav-mini ${isFav ? &quot;on&quot; : &quot;&quot;}&quot; type=&quot;button&quot; aria-pressed=&quot;${isFav}&quot;
+                aria-label=&quot;${isFav ? &quot;Usuń z ulubionych&quot; : &quot;Dodaj do ulubionych&quot;}: ${p.name}&quot;>${isFav ? &quot;★&quot; : &quot;☆&quot;}</button>`;
+      card.querySelector(&quot;.card-open&quot;).addEventListener(&quot;click&quot;, () => openModal(p.id));
+      card.querySelector(&quot;.fav-mini&quot;).addEventListener(&quot;click&quot;, () => toggleFavorite(p.id));
+      gridEl.appendChild(card);
+    });
+
+    // Licznik wyników i komunikat o braku wyników
+    countEl.textContent = `Znalezione miejsca: ${list.length} z ${PLACES.length}`;
+    emptyEl.hidden = list.length > 0;
+    if (!list.length) {
+      emptyEl.textContent = activeFilter === &quot;Ulubione&quot; &amp;&amp; !query
+        ? &quot;Nie masz jeszcze ulubionych miejsc. Kliknij gwiazdkę na karcie, aby dodać pierwsze.&quot;
+        : &quot;Nie znaleziono pasujących miejsc. Zmień frazę lub wybierz inną kategorię.&quot;;
+    }
+  }
+
+  function render() {
+    renderFilters();
+    renderCards();
+  }
+
+  /* =========================================================
+     7. MODAL ZE SZCZEGÓŁAMI
+     ========================================================= */
+  function openModal(id) {
+    const p = PLACES.find((item) => item.id === id);
+    if (!p) return;
+    openId = id;
+
+    $(&quot;m-art&quot;).style.background = gradient(p.colors);
+    $(&quot;m-emoji&quot;).textContent = p.emoji;
+    $(&quot;m-title&quot;).textContent = p.name;
+    $(&quot;m-region&quot;).textContent = p.region;
+    $(&quot;m-cats&quot;).innerHTML = p.categories.map((c) => `<span class=&quot;badge&quot;>${c}</span>`).join(&quot;&quot;);
+    $(&quot;m-desc&quot;).textContent = p.desc;
+    $(&quot;m-fact&quot;).textContent = p.fact;
+    $(&quot;m-tags&quot;).innerHTML = p.tags.map((t) => `<span class=&quot;tag&quot;>#${t}</span>`).join(&quot;&quot;);
+    renderFavButton();
+
+    document.body.classList.add(&quot;modal-open&quot;);
+    modal.showModal();
+  }
+
+  function renderFavButton() {
+    const btn = $(&quot;m-fav&quot;);
+    const isFav = favorites.has(openId);
+    btn.setAttribute(&quot;aria-pressed&quot;, String(isFav));
+    btn.textContent = isFav ? &quot;★ W ulubionych (kliknij, aby usunąć)&quot; : &quot;☆ Dodaj do ulubionych&quot;;
+  }
+
+  function closeModal() {
+    if (modal.open) modal.close();
+  }
+
+  /* =========================================================
+     8. ZDARZENIA
+     ========================================================= */
+  searchEl.addEventListener(&quot;input&quot;, () => { query = searchEl.value; renderCards(); });
+
+  $(&quot;m-fav&quot;).addEventListener(&quot;click&quot;, () => { if (openId) toggleFavorite(openId); });
+  $(&quot;m-close&quot;).addEventListener(&quot;click&quot;, closeModal);
+
+  // Kliknięcie w tło (poza treścią okna) zamyka modal
+  modal.addEventListener(&quot;click&quot;, (e) => { if (e.target === modal) closeModal(); });
+
+  // Zdarzenie &quot;close&quot; wywołuje też klawisz Esc
+  modal.addEventListener(&quot;close&quot;, () => {
+    document.body.classList.remove(&quot;modal-open&quot;);
+    openId = null;
+  });
+
+  /* =========================================================
+     9. START
+     ========================================================= */
+  render();
+})();
+</script>
+</body>
+</html>
+"></iframe><iframe id="memory" title="Memory" srcdoc="<!DOCTYPE html>
+<html lang=&quot;pl&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;>
+<title>Memory: Skarby Hellady</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;family=Noto+Serif:wght@700&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  /* =========================================================
+     1. ZMIENNE (kolory i czcionki w jednym miejscu)
+     ========================================================= */
+  :root {
+    --aegean: #0d5eaf;
+    --aegean-deep: #0a2a4f;
+    --gold: #f2b632;
+    --marble: #f6f8fb;
+    --sea-mist: #dce8f5;
+    --ok: #1f9d55;
+    --serif: &quot;Noto Serif&quot;, Georgia, serif;
+    --sans: &quot;Manrope&quot;, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif;
+  }
+
+  /* Bezpieczne marginesy na telefonach i tabletach (notch, pasek systemowy) */
+  :root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+  * { box-sizing: border-box; margin: 0; }
+
+  body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    font-family: var(--sans);
+    color: var(--aegean-deep);
+    background: linear-gradient(180deg, #e9f1fa 0%, #cfe0f3 100%);
+  }
+
+  [hidden] { display: none !important; }
+
+  /* =========================================================
+     2. UKŁAD OGÓLNY: panel + ekrany
+     ========================================================= */
+  .panel {
+    width: 100%;
+    max-width: 480px;
+    background: var(--marble);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(10, 42, 79, .18);
+    overflow: hidden;
+  }
+  /* Pasek z meandrem (greckim kluczem) */
+  .meander {
+    height: 24px;
+    background-color: var(--aegean);
+    background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M0 20H18V6H6V14H12V10M18 20H24' fill='none' stroke='%23f2b632' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E&quot;);
+    background-repeat: repeat-x;
+  }
+  .content { padding: 24px; }
+
+  h1, h2 { font-family: var(--serif); line-height: 1.15; color: var(--aegean); }
+
+  /* Przyciski */
+  .btn {
+    font: 700 1.05rem var(--sans);
+    color: var(--aegean-deep);
+    background: var(--gold);
+    border: 0;
+    border-radius: 14px;
+    padding: 15px 32px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #c98f12;
+    transition: transform .1s, box-shadow .1s;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #c98f12; }
+  .btn:focus-visible, .tile:focus-visible { outline: 3px solid #7fb2e8; outline-offset: 3px; }
+
+  /* Ekran startowy i końcowy */
+  .center { text-align: center; padding: 14px 0; }
+  .center h1, .center h2 { font-size: clamp(2rem, 8vw, 2.8rem); margin-bottom: 12px; }
+  .center p { color: #44607f; line-height: 1.6; max-width: 36ch; margin: 0 auto 24px; }
+  .icons { font-size: 2.2rem; letter-spacing: .3em; margin-bottom: 14px; }
+
+  /* =========================================================
+     3. PASEK STATYSTYK (ruchy, czas, rekord)
+     ========================================================= */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
+  .stat { background: #fff; border: 2px solid var(--sea-mist); border-radius: 14px; padding: 8px 6px; text-align: center; }
+  .stat small { display: block; font-size: .72rem; color: #6a84a1; }
+  .stat strong { font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+
+  /* =========================================================
+     4. PLANSZA I KARTY (efekt obrotu 3D)
+     ========================================================= */
+  .board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+  .tile {
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    perspective: 600px;
+    border-radius: 16px;
+  }
+  .tile-inner {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform .45s;
+  }
+  .tile.flipped .tile-inner,
+  .tile.matched .tile-inner { transform: rotateY(180deg); }
+
+  .face {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  /* Tył karty (zakryta) */
+  .face.back {
+    background-color: var(--aegean);
+    background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M0 20H18V6H6V14H12V10M18 20H24' fill='none' stroke='%23ffffff' stroke-opacity='.35' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E&quot;);
+    box-shadow: 0 4px 0 #0a4c8d;
+  }
+  /* Przód karty (odkryta, z symbolem) */
+  .face.front {
+    background: #fff;
+    border: 3px solid var(--sea-mist);
+    font-size: clamp(1.8rem, 10vw, 2.8rem);
+    transform: rotateY(180deg);
+  }
+  .tile.matched .face.front { background: #e4f6ec; border-color: var(--ok); }
+  .tile.matched { cursor: default; animation: pop .4s; }
+
+  @keyframes pop { 50% { transform: scale(1.08); } }
+
+  /* =========================================================
+     5. EKRAN WYGRANEJ
+     ========================================================= */
+  .results { display: flex; justify-content: center; gap: 12px; margin-bottom: 22px; }
+  .results .stat { min-width: 110px; }
+  .stars { font-size: 2rem; margin-bottom: 10px; letter-spacing: .15em; }
+  #record-note { color: var(--ok); font-weight: 700; margin-bottom: 18px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile-inner { transition-duration: .01s; }
+    .tile.matched { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<main class=&quot;panel&quot;>
+  <div class=&quot;meander&quot; aria-hidden=&quot;true&quot;></div>
+  <div class=&quot;content&quot;>
+
+    <!-- EKRAN STARTOWY -->
+    <section id=&quot;start-screen&quot; class=&quot;center&quot;>
+      <div class=&quot;icons&quot; aria-hidden=&quot;true&quot;>🏛️🏺🦉</div>
+      <h1>Skarby Hellady</h1>
+      <p>Odkrywaj karty i znajdź wszystkie pary greckich symboli. Im mniej ruchów i czasu, tym lepszy wynik!</p>
+      <button class=&quot;btn&quot; id=&quot;start-btn&quot; type=&quot;button&quot;>Start gry</button>
+    </section>
+
+    <!-- EKRAN GRY -->
+    <section id=&quot;game-screen&quot; hidden>
+      <div class=&quot;stats&quot;>
+        <div class=&quot;stat&quot;><small>Ruchy</small><strong id=&quot;moves&quot;>0</strong></div>
+        <div class=&quot;stat&quot;><small>Czas</small><strong id=&quot;time&quot;>0:00</strong></div>
+        <div class=&quot;stat&quot;><small>Rekord (ruchy)</small><strong id=&quot;best&quot;>–</strong></div>
+      </div>
+      <div class=&quot;board&quot; id=&quot;board&quot; role=&quot;group&quot; aria-label=&quot;Plansza gry Memory&quot;></div>
+    </section>
+
+    <!-- EKRAN WYGRANEJ -->
+    <section id=&quot;win-screen&quot; class=&quot;center&quot; hidden>
+      <div class=&quot;stars&quot; id=&quot;stars&quot; aria-hidden=&quot;true&quot;></div>
+      <h2>Brawo, zwycięstwo!</h2>
+      <p id=&quot;win-text&quot;></p>
+      <div class=&quot;results&quot;>
+        <div class=&quot;stat&quot;><small>Ruchy</small><strong id=&quot;final-moves&quot;>0</strong></div>
+        <div class=&quot;stat&quot;><small>Czas</small><strong id=&quot;final-time&quot;>0:00</strong></div>
+      </div>
+      <p id=&quot;record-note&quot; hidden>Nowy rekord!</p>
+      <button class=&quot;btn&quot; id=&quot;restart-btn&quot; type=&quot;button&quot;>Zagraj ponownie</button>
+    </section>
+
+  </div>
+</main>
+
+<script>
+(() => {
+  &quot;use strict&quot;;
+
+  /* =========================================================
+     1. DANE: symbole kart (każdy zostanie użyty dwa razy)
+     ========================================================= */
+  const SYMBOLS = [
+    { icon: &quot;🏛️&quot;, name: &quot;Partenon&quot; },
+    { icon: &quot;🏺&quot;,  name: &quot;Amfora&quot; },
+    { icon: &quot;🦉&quot;,  name: &quot;Sowa Ateny&quot; },
+    { icon: &quot;🔱&quot;,  name: &quot;Trójząb Posejdona&quot; },
+    { icon: &quot;⚡&quot;,  name: &quot;Piorun Zeusa&quot; },
+    { icon: &quot;🫒&quot;,  name: &quot;Oliwka&quot; },
+    { icon: &quot;🍇&quot;,  name: &quot;Winogrona&quot; },
+    { icon: &quot;⛵&quot;,  name: &quot;Okręt&quot; }
+  ];
+
+  const MISMATCH_DELAY = 900;      // ile ms widać błędną parę
+  const BEST_KEY = &quot;memory-grecja-best&quot;;
+
+  /* =========================================================
+     2. ELEMENTY STRONY
+     ========================================================= */
+  const $ = (id) => document.getElementById(id);
+  const screens = { start: $(&quot;start-screen&quot;), game: $(&quot;game-screen&quot;), win: $(&quot;win-screen&quot;) };
+  const boardEl = $(&quot;board&quot;), movesEl = $(&quot;moves&quot;), timeEl = $(&quot;time&quot;), bestEl = $(&quot;best&quot;);
+
+  /* =========================================================
+     3. STAN GRY (wszystkie zmienne w jednym miejscu)
+     ========================================================= */
+  let firstPick = null;      // pierwsza odkryta karta w ruchu
+  let lockBoard = false;     // blokada klikania podczas sprawdzania pary
+  let moves = 0;
+  let matchedPairs = 0;
+  let seconds = 0;
+  let timerId = null;
+  let mismatchTimeout = null;
+
+  /* =========================================================
+     4. FUNKCJE POMOCNICZE
+     ========================================================= */
+
+  // Tasowanie tablicy (algorytm Fishera-Yatesa)
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // Zamiana sekund na format m:ss
+  function formatTime(total) {
+    const m = Math.floor(total / 60);
+    const s = String(total % 60).padStart(2, &quot;0&quot;);
+    return `${m}:${s}`;
+  }
+
+  // Pokazuje jeden ekran, ukrywa pozostałe
+  function show(name) {
+    Object.entries(screens).forEach(([key, node]) => { node.hidden = key !== name; });
+  }
+
+  // Rekord zapisany w przeglądarce (try/catch na wypadek zablokowanego localStorage)
+  function loadBest() {
+    try { return Number(localStorage.getItem(BEST_KEY)) || null; } catch { return null; }
+  }
+  function saveBest(value) {
+    try { localStorage.setItem(BEST_KEY, String(value)); } catch { /* brak zapisu – nic się nie dzieje */ }
+  }
+
+  /* =========================================================
+     5. CZAS
+     ========================================================= */
+  function startTimer() {
+    stopTimer();
+    timerId = setInterval(() => {
+      seconds++;
+      timeEl.textContent = formatTime(seconds);
+    }, 1000);
+  }
+  function stopTimer() {
+    clearInterval(timerId);
+    timerId = null;
+  }
+
+  /* =========================================================
+     6. BUDOWANIE PLANSZY
+     ========================================================= */
+  function buildBoard() {
+    boardEl.innerHTML = &quot;&quot;;
+    const deck = shuffle([...SYMBOLS, ...SYMBOLS]);   // każda para dwa razy
+
+    deck.forEach((symbol) => {
+      const tile = document.createElement(&quot;button&quot;);
+      tile.type = &quot;button&quot;;
+      tile.className = &quot;tile&quot;;
+      tile.dataset.name = symbol.name;                // po tym porównujemy karty
+      tile.setAttribute(&quot;aria-label&quot;, &quot;Zakryta karta&quot;);
+      tile.innerHTML = `
+        <span class=&quot;tile-inner&quot;>
+          <span class=&quot;face back&quot;></span>
+          <span class=&quot;face front&quot; aria-hidden=&quot;true&quot;>${symbol.icon}</span>
+        </span>`;
+      tile.addEventListener(&quot;click&quot;, () => onTileClick(tile));
+      boardEl.appendChild(tile);
+    });
+  }
+
+  /* =========================================================
+     7. LOGIKA GRY
+     ========================================================= */
+  function startGame() {
+    clearTimeout(mismatchTimeout);
+    stopTimer();
+
+    firstPick = null;
+    lockBoard = false;
+    moves = 0;
+    matchedPairs = 0;
+    seconds = 0;
+
+    movesEl.textContent = &quot;0&quot;;
+    timeEl.textContent = &quot;0:00&quot;;
+    const best = loadBest();
+    bestEl.textContent = best ? best : &quot;–&quot;;
+
+    buildBoard();
+    show(&quot;game&quot;);
+    startTimer();
+  }
+
+  function onTileClick(tile) {
+    // Ignorujemy klik, gdy plansza zablokowana, karta już odkryta lub dopasowana
+    if (lockBoard) return;
+    if (tile.classList.contains(&quot;flipped&quot;) || tile.classList.contains(&quot;matched&quot;)) return;
+
+    revealTile(tile);
+
+    // Pierwsza karta ruchu – tylko ją zapamiętujemy
+    if (!firstPick) {
+      firstPick = tile;
+      return;
+    }
+
+    // Druga karta – kończy ruch
+    moves++;
+    movesEl.textContent = moves;
+    checkMatch(firstPick, tile);
+  }
+
+  function revealTile(tile) {
+    tile.classList.add(&quot;flipped&quot;);
+    tile.setAttribute(&quot;aria-label&quot;, tile.dataset.name);
+  }
+
+  function hideTile(tile) {
+    tile.classList.remove(&quot;flipped&quot;);
+    tile.setAttribute(&quot;aria-label&quot;, &quot;Zakryta karta&quot;);
+  }
+
+  function checkMatch(a, b) {
+    if (a.dataset.name === b.dataset.name) {
+      // Para znaleziona
+      [a, b].forEach((t) => {
+        t.classList.remove(&quot;flipped&quot;);
+        t.classList.add(&quot;matched&quot;);
+        t.disabled = true;
+      });
+      firstPick = null;
+      matchedPairs++;
+      if (matchedPairs === SYMBOLS.length) finishGame();
+    } else {
+      // Błędna para – blokujemy planszę i po chwili zakrywamy obie karty
+      lockBoard = true;
+      mismatchTimeout = setTimeout(() => {
+        hideTile(a);
+        hideTile(b);
+        firstPick = null;
+        lockBoard = false;
+      }, MISMATCH_DELAY);
+    }
+  }
+
+  /* =========================================================
+     8. KONIEC GRY
+     ========================================================= */
+  function finishGame() {
+    stopTimer();
+
+    // Ocena gwiazdkami zależna od liczby ruchów
+    const stars = moves <= 12 ? 3 : moves <= 18 ? 2 : 1;
+    $(&quot;stars&quot;).textContent = &quot;★&quot;.repeat(stars) + &quot;☆&quot;.repeat(3 - stars);
+    $(&quot;final-moves&quot;).textContent = moves;
+    $(&quot;final-time&quot;).textContent = formatTime(seconds);
+    $(&quot;win-text&quot;).textContent = `Znalazłeś wszystkie ${SYMBOLS.length} par w ${moves} ruchach.`;
+
+    // Sprawdzenie rekordu
+    const best = loadBest();
+    const isRecord = !best || moves < best;
+    if (isRecord) saveBest(moves);
+    $(&quot;record-note&quot;).hidden = !isRecord;
+
+    // Krótka pauza, aby gracz zobaczył ostatnią parę
+    setTimeout(() => show(&quot;win&quot;), 700);
+  }
+
+  /* =========================================================
+     9. ZDARZENIA
+     ========================================================= */
+  $(&quot;start-btn&quot;).addEventListener(&quot;click&quot;, startGame);
+  $(&quot;restart-btn&quot;).addEventListener(&quot;click&quot;, startGame);
+})();
+</script>
+</body>
+</html>
+" hidden></iframe><iframe id="quiz" title="Quiz" srcdoc="<!DOCTYPE html>
+<html lang=&quot;pl&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;>
+<title>Quiz: Wiedza o Grecji</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&amp;family=Manrope:wght@400;500;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  /* ---------- Zmienne motywu ---------- */
+  :root {
+    --aegean: #0d5eaf;       /* grecki niebieski */
+    --aegean-deep: #0a2a4f;  /* głęboki granat (tekst, tło) */
+    --marble: #f6f8fb;       /* marmurowa biel */
+    --sea-mist: #dce8f5;     /* jasny błękit (obramowania) */
+    --ok: #1f9d55;
+    --ok-bg: #e4f6ec;
+    --bad: #d64545;
+    --bad-bg: #fde8e8;
+    --serif: &quot;Cormorant Garamond&quot;, Georgia, serif;
+    --sans: &quot;Manrope&quot;, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif;
+  }
+
+  /* Bezpieczne marginesy na telefonach i tabletach (notch, pasek systemowy) */
+  :root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+  * { box-sizing: border-box; margin: 0; }
+
+  body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    font-family: var(--sans);
+    color: var(--aegean-deep);
+    background: linear-gradient(180deg, #e9f1fa 0%, #cfe0f3 100%);
+  }
+
+  /* ---------- Karta główna z meandrem (greckim kluczem) u góry ---------- */
+  .card {
+    width: 100%;
+    max-width: 620px;
+    background: var(--marble);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(10, 42, 79, .18);
+    overflow: hidden;
+  }
+  .meander {
+    height: 24px;
+    background-color: var(--aegean);
+    background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M0 20H18V6H6V14H12V10M18 20H24' fill='none' stroke='white' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E&quot;);
+    background-repeat: repeat-x;
+  }
+  .content { padding: 28px 28px 32px; }
+
+  h1, h2 { font-family: var(--serif); font-weight: 700; line-height: 1.1; }
+
+  .screen[hidden] { display: none; }
+
+  /* ---------- Ekran startowy ---------- */
+  #start { text-align: center; padding: 12px 0; }
+  #start h1 { font-size: clamp(2.4rem, 8vw, 3.4rem); color: var(--aegean); }
+  #start p { margin: 14px auto 28px; max-width: 38ch; line-height: 1.6; color: #44607f; }
+
+  /* ---------- Przyciski ---------- */
+  .btn {
+    font: 700 1rem var(--sans);
+    color: #fff;
+    background: var(--aegean);
+    border: 0;
+    border-radius: 14px;
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+  .btn:hover { background: #0a4c8d; }
+  .btn:active { transform: scale(.97); }
+  .btn:focus-visible, .option:focus-visible { outline: 3px solid #7fb2e8; outline-offset: 2px; }
+
+  /* ---------- Pasek postępu i wynik ---------- */
+  .topbar { display: flex; justify-content: space-between; align-items: center; font-size: .9rem; font-weight: 500; color: #44607f; margin-bottom: 10px; }
+  .score-pill { background: var(--sea-mist); color: var(--aegean); font-weight: 700; padding: 6px 14px; border-radius: 999px; }
+  .progress { height: 8px; background: var(--sea-mist); border-radius: 999px; overflow: hidden; margin-bottom: 26px; }
+  .progress-bar { height: 100%; width: 0; background: var(--aegean); border-radius: inherit; transition: width .4s ease; }
+
+  /* ---------- Pytanie i odpowiedzi ---------- */
+  #question { font-size: clamp(1.6rem, 5vw, 2rem); margin-bottom: 22px; }
+  .options { display: grid; gap: 12px; }
+  .option {
+    font: 500 1rem var(--sans);
+    color: var(--aegean-deep);
+    text-align: left;
+    background: #fff;
+    border: 2px solid var(--sea-mist);
+    border-radius: 14px;
+    padding: 15px 18px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s, transform .1s;
+  }
+  .option:hover:not(:disabled) { border-color: var(--aegean); transform: translateX(3px); }
+  .option:disabled { cursor: default; }
+  .option.correct { background: var(--ok-bg); border-color: var(--ok); color: #0f6b38; font-weight: 700; }
+  .option.wrong   { background: var(--bad-bg); border-color: var(--bad); color: #a32626; font-weight: 700; }
+  .option.dim     { opacity: .55; }
+
+  /* ---------- Informacja zwrotna ---------- */
+  #feedback { min-height: 3.2em; margin-top: 18px; font-size: .95rem; line-height: 1.5; color: #33516f; }
+  #feedback strong.ok  { color: var(--ok); }
+  #feedback strong.bad { color: var(--bad); }
+  #next { margin-top: 12px; width: 100%; }
+  #next[hidden] { display: none; }
+
+  /* ---------- Ekran końcowy ---------- */
+  #result { text-align: center; padding: 8px 0; }
+  .ring {
+    --pct: 0;
+    width: 160px; height: 160px; margin: 0 auto 20px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: conic-gradient(var(--aegean) calc(var(--pct) * 1%), var(--sea-mist) 0);
+  }
+  .ring span {
+    width: 128px; height: 128px; border-radius: 50%;
+    background: var(--marble);
+    display: grid; place-items: center;
+    font: 700 2.6rem var(--serif);
+    color: var(--aegean);
+  }
+  #result h2 { font-size: 2.2rem; margin-bottom: 8px; }
+  #result p { color: #44607f; line-height: 1.6; margin-bottom: 26px; }
+
+  @media (max-width: 480px) { .content { padding: 22px 18px 26px; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<main class=&quot;card&quot;>
+  <div class=&quot;meander&quot; aria-hidden=&quot;true&quot;></div>
+  <div class=&quot;content&quot;>
+
+    <!-- Ekran startowy -->
+    <section id=&quot;start&quot; class=&quot;screen&quot;>
+      <h1>Quiz o Grecji</h1>
+      <p>Sprawdź, ile wiesz o historii, mitach i kulturze Hellady. Czeka na Ciebie <span id=&quot;total-count&quot;></span> pytań.</p>
+      <button class=&quot;btn&quot; id=&quot;start-btn&quot;>Rozpocznij quiz</button>
+    </section>
+
+    <!-- Ekran pytań -->
+    <section id=&quot;quiz&quot; class=&quot;screen&quot; hidden>
+      <div class=&quot;topbar&quot;>
+        <span id=&quot;counter&quot;>Pytanie 1 z 1</span>
+        <span class=&quot;score-pill&quot; id=&quot;score&quot;>Punkty: 0</span>
+      </div>
+      <div class=&quot;progress&quot; role=&quot;progressbar&quot; aria-label=&quot;Postęp quizu&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;>
+        <div class=&quot;progress-bar&quot; id=&quot;bar&quot;></div>
+      </div>
+      <h2 id=&quot;question&quot;></h2>
+      <div class=&quot;options&quot; id=&quot;options&quot;></div>
+      <p id=&quot;feedback&quot; aria-live=&quot;polite&quot;></p>
+      <button class=&quot;btn&quot; id=&quot;next&quot; hidden>Dalej</button>
+    </section>
+
+    <!-- Ekran końcowy -->
+    <section id=&quot;result&quot; class=&quot;screen&quot; hidden>
+      <div class=&quot;ring&quot; id=&quot;ring&quot;><span id=&quot;result-score&quot;></span></div>
+      <h2 id=&quot;result-title&quot;></h2>
+      <p id=&quot;result-text&quot;></p>
+      <button class=&quot;btn&quot; id=&quot;restart&quot;>Zagraj ponownie</button>
+    </section>
+
+  </div>
+</main>
+
+<script>
+(() => {
+  &quot;use strict&quot;;
+
+  /* ---------- Baza pytań ----------
+     answer = indeks poprawnej odpowiedzi w tablicy options (przed losowaniem). */
+  const QUESTIONS = [
+    { q: &quot;Jaka jest stolica Grecji?&quot;, options: [&quot;Saloniki&quot;, &quot;Ateny&quot;, &quot;Sparta&quot;, &quot;Patras&quot;], answer: 1, info: &quot;Ateny to jedno z najstarszych miast świata, liczące ponad 3000 lat.&quot; },
+    { q: &quot;Jak nazywa się najwyższy szczyt Grecji?&quot;, options: [&quot;Olimp&quot;, &quot;Parnas&quot;, &quot;Etna&quot;, &quot;Pelion&quot;], answer: 0, info: &quot;Olimp ma 2917 m n.p.m. – w micie był siedzibą bogów.&quot; },
+    { q: &quot;Które morze leży na wschód od lądowej Grecji?&quot;, options: [&quot;Adriatyckie&quot;, &quot;Czarne&quot;, &quot;Egejskie&quot;, &quot;Jońskie&quot;], answer: 2, info: &quot;Morze Egejskie jest pełne wysp, m.in. Cyklad i Dodekanezu.&quot; },
+    { q: &quot;W którym mieście odbyły się pierwsze nowożytne igrzyska olimpijskie (1896)?&quot;, options: [&quot;Paryż&quot;, &quot;Londyn&quot;, &quot;Olimpia&quot;, &quot;Ateny&quot;], answer: 3, info: &quot;Igrzyska wskrzesił Pierre de Coubertin, a pierwsze odbyły się na stadionie Panathinaiko.&quot; },
+    { q: &quot;Jaką walutę stosuje się w Grecji?&quot;, options: [&quot;Drachma&quot;, &quot;Euro&quot;, &quot;Lir&quot;, &quot;Funt&quot;], answer: 1, info: &quot;Grecja przyjęła euro w 2001 roku, zastępując drachmę.&quot; },
+    { q: &quot;Która wyspa jest największa w Grecji?&quot;, options: [&quot;Rodos&quot;, &quot;Korfu&quot;, &quot;Santorini&quot;, &quot;Kreta&quot;], answer: 3, info: &quot;Kreta była kolebką cywilizacji minojskiej.&quot; },
+    { q: &quot;Która bogini była patronką Aten?&quot;, options: [&quot;Atena&quot;, &quot;Afrodyta&quot;, &quot;Hera&quot;, &quot;Artemida&quot;], answer: 0, info: &quot;Atena – bogini mądrości i strategii – dała miastu swoje imię.&quot; },
+    { q: &quot;Kto był nauczycielem Platona?&quot;, options: [&quot;Arystoteles&quot;, &quot;Sokrates&quot;, &quot;Pitagoras&quot;, &quot;Heraklit&quot;], answer: 1, info: &quot;Sokrates nie spisał własnych myśli – znamy je głównie z dialogów Platona.&quot; },
+    { q: &quot;Czym był Partenon?&quot;, options: [&quot;Teatrem&quot;, &quot;Stadionem&quot;, &quot;Świątynią Ateny na Akropolu&quot;, &quot;Pałacem króla&quot;], answer: 2, info: &quot;Partenon zbudowano w V w. p.n.e. z marmuru pentelickiego.&quot; },
+    { q: &quot;Ile liter ma alfabet grecki?&quot;, options: [&quot;22&quot;, &quot;26&quot;, &quot;30&quot;, &quot;24&quot;], answer: 3, info: &quot;Alfabet grecki zaczyna się od liter alfa i beta – stąd słowo „alfabet”.&quot; },
+    { q: &quot;Który epos Homera opowiada o powrocie Odyseusza do domu?&quot;, options: [&quot;Iliada&quot;, &quot;Odyseja&quot;, &quot;Eneida&quot;, &quot;Teogonia&quot;], answer: 1, info: &quot;Podróż Odyseusza do Itaki trwała dziesięć lat.&quot; },
+    { q: &quot;Która wyspa słynie z białych domków z niebieskimi kopułami i widokiem na kalderę?&quot;, options: [&quot;Santorini&quot;, &quot;Kreta&quot;, &quot;Kefalonia&quot;, &quot;Lesbos&quot;], answer: 0, info: &quot;Kaldera Santorini powstała po potężnej erupcji wulkanu ok. 1600 r. p.n.e.&quot; },
+    { q: &quot;Kogo nazywa się „ojcem medycyny”?&quot;, options: [&quot;Galena&quot;, &quot;Hipokratesa&quot;, &quot;Euklidesa&quot;, &quot;Tales z Miletu&quot;], answer: 1, info: &quot;Hipokrates z Kos jest autorem idei, na której oparto tzw. przysięgę lekarską.&quot; },
+    { q: &quot;Z czego słynęła starożytna Sparta?&quot;, options: [&quot;Z handlu&quot;, &quot;Z teatru&quot;, &quot;Z wojskowej tężyzny&quot;, &quot;Z żeglugi&quot;], answer: 2, info: &quot;Spartańscy chłopcy przechodzili surowe szkolenie wojskowe zwane agoge.&quot; },
+    { q: &quot;Który grecki ser z mleka owczego (lub z domieszką koziego) jest znany na całym świecie?&quot;, options: [&quot;Gouda&quot;, &quot;Halloumi&quot;, &quot;Mozzarella&quot;, &quot;Feta&quot;], answer: 3, info: &quot;Feta ma w UE chronioną nazwę pochodzenia.&quot; },
+    { q: &quot;W którym miejscu znajdowała się słynna wyrocznia, w której przemawiała Pytia?&quot;, options: [&quot;Delfy&quot;, &quot;Korynt&quot;, &quot;Mykeny&quot;, &quot;Epidauros&quot;], answer: 0, info: &quot;Wyrocznia delficka była poświęcona Apollinowi.&quot; },
+    { q: &quot;Kto według legendy zawołał „Eureka!”?&quot;, options: [&quot;Archimedes&quot;, &quot;Pitagoras&quot;, &quot;Demokryt&quot;, &quot;Sofokles&quot;], answer: 0, info: &quot;Archimedes odkrył prawo wyporu, kąpiąc się w wannie.&quot; },
+    { q: &quot;Który król Macedonii podbił imperium perskie?&quot;, options: [&quot;Perykles&quot;, &quot;Leonidas&quot;, &quot;Aleksander Wielki&quot;, &quot;Filip II&quot;], answer: 2, info: &quot;Aleksander Wielki stworzył imperium sięgające aż do Indii.&quot; },
+    { q: &quot;Co oznacza greckie słowo „demokratia”?&quot;, options: [&quot;Władza bogów&quot;, &quot;Władza ludu&quot;, &quot;Władza króla&quot;, &quot;Władza bogatych&quot;], answer: 1, info: &quot;Słowo pochodzi od demos (lud) i kratos (władza).&quot; },
+    { q: &quot;Z jakim wydarzeniem wiąże się początek biegu maratońskiego?&quot;, options: [&quot;Z igrzyskami w Olimpii&quot;, &quot;Z wojną trojańską&quot;, &quot;Z bitwą pod Maratonem i biegiem posłańca do Aten&quot;, &quot;Z oblężeniem Teb&quot;], answer: 2, info: &quot;Bitwa pod Maratonem odbyła się w 490 r. p.n.e. – Grecy pokonali Persów.&quot; }
+  ];
+
+  /* ---------- Referencje do elementów DOM ---------- */
+  const $ = (id) => document.getElementById(id);
+  const screens = { start: $(&quot;start&quot;), quiz: $(&quot;quiz&quot;), result: $(&quot;result&quot;) };
+  const el = {
+    counter: $(&quot;counter&quot;), score: $(&quot;score&quot;), bar: $(&quot;bar&quot;), question: $(&quot;question&quot;),
+    options: $(&quot;options&quot;), feedback: $(&quot;feedback&quot;), next: $(&quot;next&quot;),
+    ring: $(&quot;ring&quot;), resultScore: $(&quot;result-score&quot;), resultTitle: $(&quot;result-title&quot;), resultText: $(&quot;result-text&quot;)
+  };
+  const progress = document.querySelector(&quot;.progress&quot;);
+
+  /* ---------- Stan aplikacji ---------- */
+  let deck = [];       // przetasowane pytania bieżącej gry
+  let index = 0;       // numer aktualnego pytania
+  let score = 0;       // liczba punktów
+  let locked = false;  // blokada ponownego kliknięcia po wyborze odpowiedzi
+
+  /* ---------- Funkcje pomocnicze ---------- */
+
+  // Tasowanie Fishera-Yatesa (zwraca nową tablicę, nie zmienia oryginału)
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // Pokazuje wskazany ekran i ukrywa pozostałe
+  function show(name) {
+    Object.entries(screens).forEach(([key, node]) => { node.hidden = key !== name; });
+  }
+
+  /* ---------- Logika gry ---------- */
+
+  function startGame() {
+    // Każde pytanie dostaje przetasowane odpowiedzi z zaznaczeniem poprawnej
+    deck = shuffle(QUESTIONS).map((item) => ({
+      q: item.q,
+      info: item.info,
+      options: shuffle(item.options.map((text, i) => ({ text, correct: i === item.answer })))
+    }));
+    index = 0;
+    score = 0;
+    show(&quot;quiz&quot;);
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const current = deck[index];
+    locked = false;
+
+    el.counter.textContent = `Pytanie ${index + 1} z ${deck.length}`;
+    el.score.textContent = `Punkty: ${score}`;
+    el.bar.style.width = `${(index / deck.length) * 100}%`;
+    progress.setAttribute(&quot;aria-valuenow&quot;, Math.round((index / deck.length) * 100));
+    el.question.textContent = current.q;
+    el.feedback.innerHTML = &quot;&quot;;
+    el.next.hidden = true;
+    el.next.textContent = index === deck.length - 1 ? &quot;Zobacz wynik&quot; : &quot;Dalej&quot;;
+
+    // Budowanie przycisków odpowiedzi
+    el.options.innerHTML = &quot;&quot;;
+    current.options.forEach((opt) => {
+      const btn = document.createElement(&quot;button&quot;);
+      btn.type = &quot;button&quot;;
+      btn.className = &quot;option&quot;;
+      btn.textContent = opt.text;
+      btn.addEventListener(&quot;click&quot;, () => selectAnswer(btn, opt));
+      el.options.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(btn, opt) {
+    if (locked) return;   // zabezpieczenie przed podwójnym kliknięciem
+    locked = true;
+
+    const buttons = [...el.options.children];
+    const current = deck[index];
+
+    // Zablokuj wszystkie odpowiedzi i zaznacz poprawną
+    buttons.forEach((b, i) => {
+      b.disabled = true;
+      if (current.options[i].correct) b.classList.add(&quot;correct&quot;);
+      else if (b !== btn) b.classList.add(&quot;dim&quot;);
+    });
+
+    if (opt.correct) {
+      score++;
+      el.feedback.innerHTML = `<strong class=&quot;ok&quot;>Dobrze!</strong> ${current.info}`;
+    } else {
+      btn.classList.add(&quot;wrong&quot;);
+      el.feedback.innerHTML = `<strong class=&quot;bad&quot;>Niestety, to nie ta odpowiedź.</strong> ${current.info}`;
+    }
+
+    el.score.textContent = `Punkty: ${score}`;
+    el.next.hidden = false;
+    el.next.focus();
+  }
+
+  function nextQuestion() {
+    if (!locked) return;  // nie można przejść dalej bez odpowiedzi
+    index++;
+    if (index < deck.length) renderQuestion();
+    else showResult();
+  }
+
+  function showResult() {
+    const pct = Math.round((score / deck.length) * 100);
+    let title, text;
+    if (pct >= 90)      { title = &quot;Prawdziwy Hellen!&quot;;   text = &quot;Imponujący wynik – Ateńczycy byliby z Ciebie dumni.&quot;; }
+    else if (pct >= 70) { title = &quot;Świetny wynik!&quot;;      text = &quot;Twoja wiedza o Grecji jest naprawdę solidna.&quot;; }
+    else if (pct >= 40) { title = &quot;Całkiem nieźle!&quot;;     text = &quot;Znasz podstawy. Spróbuj ponownie, by zdobyć więcej punktów.&quot;; }
+    else                { title = &quot;Czas na powtórkę&quot;;    text = &quot;Każdy podróżnik zaczyna od pierwszego kroku – zagraj jeszcze raz.&quot;; }
+
+    el.ring.style.setProperty(&quot;--pct&quot;, pct);
+    el.resultScore.textContent = `${score}/${deck.length}`;
+    el.resultTitle.textContent = title;
+    el.resultText.textContent = `Odpowiedziałeś poprawnie na ${score} z ${deck.length} pytań (${pct}%). ${text}`;
+    show(&quot;result&quot;);
+  }
+
+  /* ---------- Zdarzenia ---------- */
+  $(&quot;total-count&quot;).textContent = QUESTIONS.length;
+  $(&quot;start-btn&quot;).addEventListener(&quot;click&quot;, startGame);
+  $(&quot;restart&quot;).addEventListener(&quot;click&quot;, startGame);
+  el.next.addEventListener(&quot;click&quot;, nextQuestion);
+
+  // Skróty klawiszowe: 1–4 wybierają odpowiedź, Enter przechodzi dalej
+  document.addEventListener(&quot;keydown&quot;, (e) => {
+    if (screens.quiz.hidden) return;
+    if (e.key === &quot;Enter&quot; &amp;&amp; locked &amp;&amp; document.activeElement !== el.next) { nextQuestion(); return; }
+    const n = parseInt(e.key, 10);
+    if (!locked &amp;&amp; n >= 1 &amp;&amp; n <= el.options.children.length) el.options.children[n - 1].click();
+  });
+})();
+</script>
+</body>
+</html>
+" hidden></iframe>
+<script>
+(() => {
+  "use strict";
+  // Przełączanie zakładek: pokazujemy jedną ramkę, ukrywamy pozostałe
+  const tabs = document.querySelectorAll(".tab");
+  const frames = document.querySelectorAll("iframe");
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+      frames.forEach((f) => { f.hidden = f.id !== tab.dataset.target; });
+    });
+  });
+})();
+</script>
+</body>
+</html>
