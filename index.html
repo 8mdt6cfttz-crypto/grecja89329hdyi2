@@ -203,6 +203,46 @@
   .fav-btn:hover { background: #fdf3d9; }
   .fav-btn[aria-pressed=&quot;true&quot;] { background: var(--gold); }
 
+  /* ---------- Mapa ---------- */
+  .map-wrap { margin: 6px 0 22px; }
+  #map { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 26px rgba(10, 42, 79, .12); background: #cfe0f3; }
+  #map svg { display: block; width: 100%; height: auto; }
+  .map-note { font-size: .8rem; color: var(--muted); margin-top: 8px; }
+
+  /* Znaczniki ustawiane w procentach nad rysunkiem */
+  .pin {
+    position: absolute;
+    width: 36px; height: 36px; margin: -18px 0 0 -18px;
+    padding: 0;
+    border: 3px solid var(--aegean);
+    border-radius: 50%;
+    background: #fff;
+    font-size: 1.1rem; line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(10, 42, 79, .3);
+    transition: transform .15s;
+  }
+  .pin:hover, .pin:focus-visible { transform: scale(1.2); z-index: 2; }
+  /* Podpis z nazwą miejsca po najechaniu lub zaznaczeniu */
+  .pin::after {
+    content: attr(data-name);
+    position: absolute; left: 50%; top: 100%;
+    transform: translateX(-50%); margin-top: 6px;
+    white-space: nowrap;
+    background: var(--aegean-deep); color: #fff;
+    font: 700 .72rem var(--sans);
+    padding: 3px 8px; border-radius: 8px;
+    opacity: 0; pointer-events: none; transition: opacity .15s;
+  }
+  .pin:hover::after, .pin:focus-visible::after { opacity: 1; }
+  .pin.pulse { border-color: var(--gold); animation: pulse .8s 3; z-index: 3; }
+  @keyframes pulse { from { box-shadow: 0 0 0 0 rgba(242, 182, 50, .9); } to { box-shadow: 0 0 0 22px rgba(242, 182, 50, 0); } }
+  @media (max-width: 520px) {
+    .pin { width: 30px; height: 30px; margin: -15px 0 0 -15px; font-size: .95rem; border-width: 2px; }
+  }
+  .map-btn { margin-bottom: 10px; border-color: var(--aegean); }
+  .map-btn:hover { background: var(--sea-mist); }
+
   footer { text-align: center; color: var(--muted); font-size: .85rem; padding-bottom: 30px; }
 
   @media (prefers-reduced-motion: reduce) {
@@ -215,7 +255,7 @@
 <div class=&quot;meander&quot; aria-hidden=&quot;true&quot;></div>
 <header>
   <h1>Przewodnik po Grecji</h1>
-  <p>Miejsca, smaki i widoki, które warto zobaczyć. Wybierz kategorię, wyszukaj miejsce i zapisz swoje ulubione.</p>
+  <p>Miejsca, smaki i widoki, które warto zobaczyć. Zobacz miejsca na mapie, wybierz kategorię, wyszukaj i zapisz swoje ulubione.</p>
 </header>
 
 <main class=&quot;wrap&quot;>
@@ -223,6 +263,14 @@
 
   <div class=&quot;filters&quot; id=&quot;filters&quot; role=&quot;group&quot; aria-label=&quot;Filtry kategorii&quot;></div>
   <p class=&quot;count&quot; id=&quot;count&quot; aria-live=&quot;polite&quot;></p>
+
+  <div class=&quot;map-wrap&quot;>
+    <div id=&quot;map&quot; role=&quot;group&quot; aria-label=&quot;Mapa Grecji z zaznaczonymi miejscami&quot;>
+      <svg viewBox=&quot;0 0 750 700&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; role=&quot;img&quot; aria-label=&quot;Mapa poglądowa Grecji&quot;><rect width=&quot;750&quot; height=&quot;700&quot; fill=&quot;#cfe0f3&quot;/><path d=&quot;M55.2,214.0 L70.9,205.0 L90.6,190.0 L98.5,160.0 L118.2,125.0 L136.3,95.0 L165.5,100.0 L212.8,85.0 L252.2,68.0 L271.9,60.0 L286.0,46.0 L303.4,42.0 L331.0,42.0 L386.1,45.0 L425.5,42.0 L480.7,45.0 L535.8,20.0 L556.3,6.0 L573.7,18.0 L576.8,48.0 L553.2,80.0 L531.9,103.0 L539.8,135.0 L542.1,175.0 L533.5,232.0 L583.1,248.0 L594.9,275.0 L587.1,313.0 L551.6,350.0 L591.0,360.0 L626.5,395.0 L640.6,477.0 L706.8,495.0 L748.6,518.0 L748.6,0.0 L11.8,0.0 L11.8,50.0 L11.8,135.0 L39.4,175.0 Z&quot; fill=&quot;#e6e9ef&quot; stroke=&quot;#c3cddb&quot; stroke-width=&quot;1.5&quot; stroke-linejoin=&quot;round&quot;/><g fill=&quot;#fdfaf0&quot; stroke=&quot;#0d5eaf&quot; stroke-width=&quot;2&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M58.1,215.5 L64.0,218.5 L69.3,222.5 L74.1,227.5 L75.5,232.5 L73.5,237.5 L76.0,243.0 L83.1,249.0 L88.6,255.2 L92.6,261.7 L97.5,267.5 L103.4,272.5 L108.2,276.2 L111.7,278.7 L115.6,278.7 L120.0,276.2 L124.7,272.7 L129.8,268.2 L134.2,268.2 L137.7,272.7 L139.7,277.0 L140.1,281.0 L139.7,285.2 L138.5,289.7 L135.9,292.0 L132.0,292.0 L128.6,290.7 L125.9,288.2 L122.5,286.7 L118.6,286.2 L115.6,289.0 L113.7,295.0 L113.3,301.5 L114.5,308.5 L118.2,314.0 L124.5,318.0 L130.8,321.7 L137.1,325.2 L140.7,329.0 L141.4,333.0 L141.8,338.0 L141.8,344.0 L145.8,347.0 L153.7,347.0 L160.2,346.2 L165.3,344.7 L174.5,344.7 L187.9,346.2 L195.8,345.5 L198.2,342.5 L202.7,341.5 L209.4,342.5 L216.7,342.2 L224.6,340.7 L232.9,339.2 L241.5,337.7 L249.0,338.5 L255.3,341.5 L262.4,343.5 L270.3,344.5 L278.0,347.0 L285.5,351.0 L292.2,354.7 L298.1,358.2 L301.6,363.0 L302.8,369.0 L300.2,373.2 L293.9,375.7 L291.4,379.5 L292.5,384.5 L295.7,387.0 L300.8,387.0 L304.8,386.0 L307.5,384.0 L311.3,382.7 L316.0,382.2 L321.9,380.5 L329.0,377.5 L334.5,378.5 L338.4,383.5 L343.6,389.0 L349.9,395.0 L357.8,402.2 L367.2,410.7 L372.7,413.2 L374.3,409.7 L374.1,403.7 L372.1,395.2 L371.0,387.7 L370.6,381.2 L370.8,374.7 L371.5,368.2 L367.2,360.7 L357.8,352.2 L349.1,346.0 L341.2,342.0 L333.7,337.0 L326.6,331.0 L320.7,326.5 L316.0,323.5 L310.5,320.2 L304.2,316.7 L294.7,312.0 L282.1,306.0 L274.2,301.7 L271.1,299.2 L266.7,297.2 L261.2,295.7 L260.2,292.5 L263.8,287.5 L269.7,284.0 L278.0,282.0 L283.9,279.5 L287.4,276.5 L285.3,271.5 L277.4,264.5 L275.0,258.7 L278.2,254.2 L281.7,250.0 L285.6,246.0 L290.2,245.5 L295.3,248.5 L297.9,253.7 L297.9,261.2 L298.3,266.7 L299.0,270.2 L300.4,270.5 L302.4,267.5 L306.3,264.5 L312.2,261.5 L314.8,256.2 L314.0,248.7 L311.1,243.2 L305.9,239.7 L299.4,234.7 L291.6,228.2 L286.2,221.2 L283.5,213.7 L276.6,203.7 L265.6,191.2 L260.0,181.2 L260.0,173.7 L260.0,161.2 L260.0,143.7 L260.4,133.7 L261.2,131.2 L265.2,128.7 L272.3,126.2 L278.4,123.0 L283.5,119.0 L285.5,120.2 L284.3,126.7 L286.6,134.7 L292.5,144.2 L300.8,151.7 L311.5,157.2 L318.0,166.0 L320.3,178.0 L322.9,183.7 L325.6,183.2 L328.6,181.0 L331.7,177.0 L336.1,170.7 L341.6,162.2 L346.5,163.7 L350.9,175.2 L355.4,182.0 L360.1,184.0 L364.4,181.2 L368.4,173.7 L369.0,166.7 L366.2,160.2 L363.9,153.2 L361.9,145.7 L364.3,144.5 L371.0,149.5 L379.2,154.5 L389.1,159.5 L395.6,163.0 L398.7,165.0 L399.7,162.0 L398.5,154.0 L394.6,148.0 L387.9,144.0 L380.6,140.2 L372.7,136.7 L366.8,132.5 L362.9,127.5 L357.8,122.5 L351.4,117.5 L350.9,112.0 L356.0,106.0 L369.6,98.7 L391.6,90.2 L410.4,88.2 L425.7,92.7 L440.3,92.5 L454.1,87.5 L475.4,87.5 L504.1,92.5 L521.9,97.0 L528.6,101.0 L537.2,97.2 L547.9,85.7 L559.1,72.0 L570.9,56.0 L576.0,40.5 L574.5,25.5 L569.3,15.0 L560.7,9.0 L551.2,9.5 L541.0,16.5 L522.0,26.2 L494.5,38.7 L466.9,44.2 L439.3,42.7 L415.7,42.7 L396.0,44.2 L372.3,44.2 L344.7,42.7 L324.1,42.0 L310.3,42.0 L299.0,43.0 L290.4,45.0 L282.5,49.5 L275.4,56.5 L266.9,62.0 L257.1,66.0 L242.3,72.2 L222.6,80.7 L200.9,88.7 L177.3,96.2 L158.2,98.7 L143.6,96.2 L131.8,102.5 L122.7,117.5 L113.3,133.7 L103.4,151.2 L96.5,167.5 L92.6,182.5 L85.7,193.7 L75.8,201.2 L67.0,207.2 L59.1,211.8 Z&quot;/><path d=&quot;M195.2,350.7 L193.3,354.2 L188.5,358.2 L181.0,362.7 L174.3,364.5 L168.4,363.5 L160.4,369.0 L150.1,381.0 L148.5,394.2 L155.6,408.7 L161.7,420.7 L166.9,430.2 L173.4,440.0 L181.2,450.0 L185.2,458.7 L185.2,466.2 L185.4,473.5 L185.8,480.5 L186.8,485.0 L188.3,487.0 L189.1,490.5 L189.1,495.5 L194.0,498.5 L203.9,499.5 L212.0,494.5 L218.3,483.5 L223.8,481.2 L228.5,487.7 L233.6,495.7 L239.2,505.2 L243.5,516.2 L246.6,528.7 L248.8,536.7 L250.0,540.2 L252.6,537.7 L256.5,529.2 L258.3,519.8 L257.9,509.2 L259.8,502.5 L264.2,499.5 L269.7,502.2 L276.4,510.7 L282.7,518.7 L288.6,526.2 L295.5,531.7 L303.4,535.2 L305.7,532.7 L302.6,524.2 L299.4,517.7 L296.3,513.2 L294.9,507.0 L295.3,499.0 L292.2,487.0 L285.5,471.0 L279.5,457.2 L274.4,445.7 L272.8,436.2 L274.8,428.8 L278.8,426.2 L284.7,428.7 L290.6,432.5 L296.5,437.5 L302.4,440.5 L308.3,441.5 L312.2,440.2 L314.2,436.7 L312.2,433.2 L306.3,429.7 L303.4,425.2 L303.4,419.7 L307.9,417.7 L317.0,419.2 L318.9,415.0 L313.8,405.0 L307.1,396.7 L298.8,390.2 L293.9,385.5 L292.3,382.5 L291.4,380.0 L291.0,378.0 L286.0,377.2 L276.6,377.7 L269.5,376.5 L264.8,373.5 L253.9,369.0 L237.0,363.0 L226.2,358.7 L221.4,356.2 L215.5,355.7 L208.4,357.2 L202.7,355.7 L198.4,351.2 Z&quot;/><path d=&quot;M343.2,627.0 L347.1,625.0 L351.4,624.0 L356.0,624.0 L361.0,625.0 L366.3,627.0 L372.0,629.1 L378.1,631.4 L384.6,633.7 L391.5,636.2 L400.2,638.4 L410.5,640.3 L422.6,641.9 L436.4,643.1 L448.4,644.4 L458.8,645.6 L467.4,646.9 L474.3,648.1 L480.8,649.7 L486.9,651.6 L492.6,653.7 L497.9,656.2 L503.8,658.0 L510.2,659.0 L517.1,659.2 L524.6,658.7 L531.1,657.8 L536.6,656.4 L541.2,654.6 L544.7,652.4 L547.2,652.0 L548.7,653.5 L549.1,656.9 L548.5,662.1 L545.6,666.8 L540.3,670.9 L532.6,674.5 L522.5,677.5 L510.4,679.9 L496.1,681.8 L479.7,683.1 L461.2,683.9 L444.3,684.1 L429.2,683.9 L415.7,683.1 L403.8,681.9 L392.8,679.7 L382.4,676.6 L372.8,672.5 L364.0,667.5 L356.3,663.3 L349.8,659.9 L344.5,657.4 L340.3,655.6 L337.4,652.9 L335.7,649.1 L335.3,644.4 L336.1,638.6 L337.7,633.8 L340.0,629.9 Z&quot;/><path d=&quot;M293.0,292.5 L295.6,289.5 L298.1,286.9 L300.6,284.8 L303.0,283.1 L305.3,281.9 L307.9,281.7 L310.7,282.6 L313.6,284.5 L316.8,287.5 L320.0,290.6 L323.2,293.7 L326.5,296.9 L329.9,300.1 L334.4,302.9 L340.0,305.1 L346.7,306.9 L354.6,308.1 L361.5,310.0 L367.4,312.5 L372.3,315.6 L376.3,319.4 L379.7,323.7 L382.7,328.8 L385.1,334.4 L387.1,340.6 L390.1,347.2 L394.0,354.1 L398.9,361.2 L404.8,368.7 L408.4,374.2 L409.7,377.6 L408.7,378.9 L405.3,378.1 L401.5,376.6 L397.3,374.4 L392.6,371.4 L387.5,367.6 L382.3,363.6 L377.1,359.2 L371.8,354.5 L366.5,349.5 L361.3,345.2 L356.2,341.7 L351.2,339.0 L346.2,337.0 L341.8,334.9 L337.9,332.8 L334.4,330.6 L331.5,328.4 L328.3,325.7 L324.8,322.7 L321.1,319.4 L317.2,315.6 L313.2,312.2 L309.3,309.1 L305.3,306.2 L301.4,303.7 L298.1,301.7 L295.3,300.1 L293.1,298.9 L291.6,298.1 L291.0,296.8 L291.5,294.9 Z&quot;/><path d=&quot;M49.3,203.5 L53.2,204.5 L56.1,206.1 L58.1,208.4 L59.1,211.2 L59.1,214.7 L59.1,218.6 L59.1,222.9 L59.1,227.5 L59.1,232.5 L58.3,236.4 L56.6,239.3 L54.1,241.1 L50.7,241.9 L47.3,241.6 L43.9,240.4 L40.4,238.1 L36.8,234.9 L34.3,231.5 L32.7,228.0 L32.1,224.4 L32.5,220.6 L33.4,217.0 L34.9,213.5 L36.9,210.1 L39.5,206.9 L42.4,204.7 L45.7,203.6 Z&quot;/><path d=&quot;M110.9,300.6 L111.3,304.4 L110.9,308.0 L109.7,311.5 L107.8,314.9 L105.0,318.1 L102.6,319.7 L100.7,319.7 L99.1,318.1 L97.9,314.9 L97.9,311.5 L99.1,308.0 L101.5,304.4 L105.0,300.6 L107.8,298.7 L109.7,298.7 Z&quot;/><path d=&quot;M101.9,345.0 L106.9,347.0 L110.8,349.4 L113.8,352.3 L115.7,355.6 L116.7,359.4 L116.5,362.8 L115.0,365.9 L112.3,368.7 L108.4,371.2 L104.2,372.2 L99.7,371.6 L95.1,369.4 L90.1,365.6 L87.2,361.7 L86.2,357.6 L87.2,353.2 L90.1,348.7 L93.6,345.9 L97.5,344.6 Z&quot;/><path d=&quot;M115.2,395.0 L121.2,397.0 L125.3,399.4 L127.8,402.3 L128.5,405.6 L127.6,409.4 L125.8,411.9 L123.4,413.1 L120.2,413.1 L116.2,411.9 L113.0,409.8 L110.6,406.9 L108.8,403.2 L107.9,398.7 L108.6,395.9 L111.1,394.6 Z&quot;/><path d=&quot;M422.6,101.9 L426.9,103.1 L429.4,104.9 L430.1,107.1 L429.0,109.9 L426.0,113.1 L423.2,115.2 L420.4,116.1 L417.7,115.7 L415.2,114.2 L413.6,112.4 L412.9,110.1 L413.1,107.5 L414.3,104.5 L416.3,102.6 L419.0,101.7 Z&quot;/><path d=&quot;M463.4,186.9 L470.3,188.1 L475.0,189.7 L477.5,191.6 L477.7,193.7 L475.8,196.2 L472.8,198.0 L468.9,199.0 L463.9,199.2 L458.0,198.7 L453.8,197.6 L451.4,195.7 L450.6,193.1 L451.6,189.9 L454.1,187.7 L458.0,186.7 Z&quot;/><path d=&quot;M551.6,248.7 L559.5,251.2 L564.9,254.1 L567.9,257.2 L568.3,260.6 L566.4,264.4 L562.9,267.5 L558.0,270.0 L551.6,271.9 L543.7,273.1 L536.8,273.1 L530.9,271.9 L526.0,269.4 L522.1,265.6 L520.6,261.9 L521.6,258.1 L525.0,254.4 L530.9,250.6 L537.3,248.4 L544.2,247.8 Z&quot;/><path d=&quot;M533.4,325.6 L535.9,329.4 L537.4,333.7 L537.7,338.7 L536.8,344.4 L534.9,350.6 L532.6,355.0 L530.2,357.5 L527.5,358.1 L524.5,356.9 L522.3,354.4 L520.8,350.6 L520.1,345.6 L520.1,339.4 L520.7,334.1 L521.9,329.7 L523.6,326.2 L526.0,323.7 L528.4,322.8 L530.9,323.4 Z&quot;/><path d=&quot;M586.1,403.0 L595.9,405.0 L602.3,406.9 L605.3,408.8 L604.8,410.6 L600.8,412.4 L596.4,413.4 L591.5,413.6 L586.1,413.1 L580.2,411.9 L575.7,410.3 L572.8,408.4 L571.3,406.2 L571.3,403.7 L573.8,402.4 L578.7,402.1 Z&quot;/><path d=&quot;M290.6,556.1 L292.5,556.9 L293.9,558.1 L294.6,559.7 L294.6,561.7 L294.0,564.2 L293.1,565.8 L291.8,566.2 L290.2,565.8 L288.2,564.2 L286.9,562.7 L286.2,561.1 L286.1,559.4 L286.7,557.6 L287.7,556.5 L288.9,556.0 Z&quot;/><path d=&quot;M402.4,506.9 L405.3,508.1 L407.0,509.4 L407.2,510.6 L406.2,511.9 L403.8,513.1 L401.9,513.4 L400.5,512.8 L399.4,511.2 L398.8,508.7 L399.1,507.2 L400.3,506.6 Z&quot;/><path d=&quot;M441.8,433.7 L443.2,436.2 L443.8,438.2 L443.8,439.7 L443.2,440.7 L441.8,441.2 L440.7,440.9 L440.0,439.6 L439.7,437.5 L439.7,434.5 L440.0,432.9 L440.7,432.6 Z&quot;/><path d=&quot;M457.4,420.0 L462.9,422.0 L466.2,423.7 L467.2,425.1 L465.9,426.1 L462.4,426.9 L459.2,426.7 L456.4,425.7 L454.1,423.9 L452.1,421.1 L452.0,419.6 L453.8,419.2 Z&quot;/><path d=&quot;M476.2,433.1 L479.6,433.9 L481.8,434.7 L482.7,435.7 L482.6,436.9 L481.2,438.1 L479.6,438.9 L477.8,439.3 L475.9,439.2 L473.7,438.7 L472.1,438.0 L471.1,437.0 L470.7,435.7 L470.9,434.2 L471.9,433.3 L473.7,432.9 Z&quot;/><path d=&quot;M469.9,440.1 L470.1,440.9 L470.4,441.4 L470.8,441.6 L471.3,441.6 L471.9,441.4 L472.2,441.1 L472.1,440.7 L471.6,440.2 L470.8,439.7 L470.3,439.6 L470.0,439.7 Z&quot;/><path d=&quot;M396.0,415.6 L398.3,417.4 L399.6,419.0 L399.8,420.5 L398.9,421.9 L397.0,423.1 L395.4,423.3 L394.2,422.4 L393.4,420.5 L393.0,417.5 L393.3,415.7 L394.3,415.1 Z&quot;/><path d=&quot;M474.2,506.2 L476.1,507.7 L477.0,508.9 L476.7,509.6 L475.3,510.0 L472.7,510.0 L470.9,509.6 L469.9,508.9 L469.7,507.7 L470.3,506.2 L471.3,505.5 L472.6,505.5 Z&quot;/><path d=&quot;M515.7,495.0 L518.1,497.0 L519.2,498.4 L519.0,499.1 L517.5,499.2 L514.8,498.7 L512.8,498.0 L511.6,497.0 L511.2,495.7 L511.6,494.2 L512.5,493.6 L513.9,493.9 Z&quot;/><path d=&quot;M539.3,416.1 L544.2,416.9 L546.9,417.7 L547.4,418.6 L545.7,419.5 L541.8,420.5 L538.5,420.8 L536.1,420.4 L534.4,419.4 L533.4,417.6 L533.9,416.5 L535.8,416.0 Z&quot;/><path d=&quot;M490.5,129.9 L494.5,131.1 L496.4,132.4 L496.4,133.6 L494.5,134.9 L490.5,136.1 L487.6,136.4 L485.6,135.8 L484.6,134.2 L484.6,131.7 L485.6,130.2 L487.6,129.6 Z&quot;/><path d=&quot;M412.7,288.7 L414.7,291.2 L415.7,293.4 L415.7,295.3 L414.7,296.9 L412.7,298.1 L411.2,298.1 L410.3,296.9 L409.8,294.4 L409.8,290.6 L410.3,288.4 L411.2,287.8 Z&quot;/><path d=&quot;M328.5,262.1 L331.1,262.9 L332.5,263.6 L332.8,264.4 L331.9,265.1 L330.0,265.9 L328.3,266.1 L327.1,265.7 L326.1,264.7 L325.5,263.2 L325.7,262.3 L326.7,261.9 Z&quot;/><path d=&quot;M344.8,264.1 L348.7,264.9 L351.2,265.8 L352.1,266.9 L351.6,268.2 L349.7,269.7 L347.7,270.3 L345.7,269.9 L343.8,268.6 L341.8,266.4 L341.3,264.9 L342.3,264.1 Z&quot;/><path d=&quot;M432.9,387.6 L437.8,389.4 L441.0,391.5 L442.5,394.0 L442.3,396.9 L440.3,400.1 L438.1,402.2 L435.6,403.2 L432.9,403.1 L430.0,401.9 L427.7,400.0 L426.3,397.5 L425.5,394.4 L425.5,390.6 L426.8,388.2 L429.2,387.2 Z&quot;/><path d=&quot;M486.0,463.1 L489.5,463.9 L491.8,465.5 L492.8,468.0 L492.5,471.4 L490.9,475.6 L489.2,478.4 L487.2,479.6 L485.0,479.4 L482.6,477.6 L481.0,475.5 L480.0,473.0 L479.7,470.1 L480.1,466.9 L481.3,464.6 L483.2,463.4 Z&quot;/><path d=&quot;M461.5,466.9 L464.4,468.1 L466.2,469.6 L466.6,471.2 L465.9,473.0 L463.9,475.0 L462.2,475.7 L460.7,475.1 L459.5,473.1 L458.5,469.9 L458.5,467.7 L459.5,466.7 Z&quot;/><path d=&quot;M482.1,534.9 L484.0,536.1 L485.4,537.5 L486.0,539.0 L486.1,540.6 L485.5,542.4 L484.6,543.5 L483.3,544.0 L481.7,543.9 L479.7,543.1 L478.4,542.0 L477.7,540.5 L477.6,538.6 L478.2,536.4 L479.2,535.0 L480.4,534.5 Z&quot;/><path d=&quot;M618.1,495.0 L623.0,497.0 L625.5,498.8 L625.5,500.4 L623.0,501.9 L618.1,503.1 L614.4,503.2 L611.9,502.2 L610.7,500.1 L610.7,496.9 L611.9,494.9 L614.4,494.3 Z&quot;/><path d=&quot;M700.8,544.4 L699.4,550.6 L696.7,557.3 L692.6,564.4 L687.0,572.0 L680.1,580.0 L674.6,585.2 L670.3,587.7 L667.4,587.5 L665.9,584.5 L665.8,580.4 L667.3,575.1 L670.3,568.7 L674.8,561.2 L679.6,554.7 L684.5,549.1 L689.6,544.4 L694.9,540.6 L698.6,539.4 L700.5,540.6 Z&quot;/><path d=&quot;M621.5,616.2 L623.5,623.7 L624.2,629.4 L623.8,633.1 L622.0,635.0 L619.1,635.0 L617.1,633.1 L616.1,629.4 L616.1,623.7 L617.1,616.2 L618.3,612.5 L619.8,612.5 Z&quot;/></g><g font-family=&quot;Manrope, system-ui, sans-serif&quot; fill=&quot;#7a8fa8&quot;><text x=&quot;150&quot; y=&quot;140&quot; font-size=&quot;26&quot; text-anchor=&quot;middle&quot; fill=&quot;#0d5eaf&quot; fill-opacity=&quot;.28&quot; letter-spacing=&quot;6&quot; font-weight=&quot;700&quot;>GRECJA</text><text x=&quot;16&quot; y=&quot;370&quot; font-size=&quot;14&quot; text-anchor=&quot;start&quot; font-style=&quot;italic&quot;>Morze Jońskie</text><text x=&quot;473&quot; y=&quot;285&quot; font-size=&quot;14&quot; text-anchor=&quot;start&quot; font-style=&quot;italic&quot;>Morze Egejskie</text><text x=&quot;607&quot; y=&quot;682&quot; font-size=&quot;14&quot; text-anchor=&quot;start&quot; font-style=&quot;italic&quot;>Morze Śródziemne</text><text x=&quot;24&quot; y=&quot;30&quot; font-size=&quot;12&quot; text-anchor=&quot;start&quot; letter-spacing=&quot;2&quot;>ALBANIA</text><text x=&quot;173&quot; y=&quot;25&quot; font-size=&quot;12&quot; text-anchor=&quot;start&quot; letter-spacing=&quot;2&quot;>MACEDONIA PN.</text><text x=&quot;386&quot; y=&quot;18&quot; font-size=&quot;12&quot; text-anchor=&quot;start&quot; letter-spacing=&quot;2&quot;>BUŁGARIA</text><text x=&quot;741&quot; y=&quot;340&quot; font-size=&quot;12&quot; text-anchor=&quot;end&quot; letter-spacing=&quot;2&quot;>TURCJA</text></g></svg>
+      <div id=&quot;pins&quot;></div>
+    </div>
+    <p class=&quot;map-note&quot;>Mapa poglądowa. Kliknij znacznik, aby zobaczyć szczegóły. Dania nie mają punktu na mapie.</p>
+  </div>
 
   <section class=&quot;grid&quot; id=&quot;grid&quot; aria-label=&quot;Lista miejsc&quot;></section>
   <p class=&quot;empty&quot; id=&quot;empty&quot; hidden></p>
@@ -243,6 +291,7 @@
     <p class=&quot;desc&quot; id=&quot;m-desc&quot;></p>
     <div class=&quot;fact&quot;><strong>Ciekawostka</strong><span id=&quot;m-fact&quot;></span></div>
     <div class=&quot;tags&quot; id=&quot;m-tags&quot;></div>
+    <button class=&quot;fav-btn map-btn&quot; id=&quot;m-map&quot; type=&quot;button&quot;>📍 Pokaż na mapie</button>
     <button class=&quot;fav-btn&quot; id=&quot;m-fav&quot; type=&quot;button&quot; aria-pressed=&quot;false&quot;></button>
   </div>
 </dialog>
@@ -256,42 +305,42 @@
      ========================================================= */
   const PLACES = [
     {
-      id: &quot;akropol&quot;, name: &quot;Akropol w Atenach&quot;, region: &quot;Ateny, Attyka&quot;,
+      id: &quot;akropol&quot;, coords: [37.9715, 23.7257], name: &quot;Akropol w Atenach&quot;, region: &quot;Ateny, Attyka&quot;,
       categories: [&quot;Zabytki&quot;], emoji: &quot;🏛️&quot;, colors: [&quot;#0d5eaf&quot;, &quot;#6fa8e0&quot;],
       desc: &quot;Skalne wzgórze nad Atenami, na którym stoją najsłynniejsze budowle starożytnej Grecji, m.in. Partenon, Erechtejon i Propyleje. Najlepiej odwiedzić go rano lub późnym popołudniem, gdy jest chłodniej i mniej tłoczno.&quot;,
       fact: &quot;Partenon zbudowano w V wieku p.n.e. jako świątynię Ateny. Akropol znajduje się na Liście Światowego Dziedzictwa UNESCO od 1987 roku.&quot;,
       tags: [&quot;Starożytność&quot;, &quot;UNESCO&quot;, &quot;Ateny&quot;, &quot;Architektura&quot;]
     },
     {
-      id: &quot;santorini&quot;, name: &quot;Santorini&quot;, region: &quot;Cyklady, Morze Egejskie&quot;,
+      id: &quot;santorini&quot;, coords: [36.40, 25.46], name: &quot;Santorini&quot;, region: &quot;Cyklady, Morze Egejskie&quot;,
       categories: [&quot;Przyroda&quot;, &quot;Plaże&quot;], emoji: &quot;🌅&quot;, colors: [&quot;#1d7fd1&quot;, &quot;#f2b632&quot;],
       desc: &quot;Wyspa o kształcie półksiężyca, powstała wokół zalanej morzem kaldery. Znana z białych domów, niebieskich kopuł i zachodów słońca w miejscowości Oia. Są tu też plaże o czarnym i czerwonym piasku.&quot;,
       fact: &quot;Potężna erupcja wulkanu na wyspie Thera około 1600 roku p.n.e. ukształtowała dzisiejszą kalderę.&quot;,
       tags: [&quot;Kaldera&quot;, &quot;Zachód słońca&quot;, &quot;Cyklady&quot;, &quot;Wulkan&quot;]
     },
     {
-      id: &quot;meteory&quot;, name: &quot;Meteory&quot;, region: &quot;Kalambaka, Tesalia&quot;,
+      id: &quot;meteory&quot;, coords: [39.7217, 21.6306], name: &quot;Meteory&quot;, region: &quot;Kalambaka, Tesalia&quot;,
       categories: [&quot;Zabytki&quot;, &quot;Przyroda&quot;], emoji: &quot;⛰️&quot;, colors: [&quot;#0a2a4f&quot;, &quot;#7a8fa8&quot;],
       desc: &quot;Wysokie skalne iglice, na których szczytach stoją średniowieczne klasztory prawosławne. Do dziś działa tu sześć z nich, a widoki na dolinę Pinios zapierają dech w piersiach.&quot;,
       fact: &quot;Nazwa „Meteora” oznacza po grecku „zawieszone w powietrzu”. Kompleks jest wpisany na Listę UNESCO od 1988 roku.&quot;,
       tags: [&quot;Klasztory&quot;, &quot;UNESCO&quot;, &quot;Wspinaczka&quot;, &quot;Widoki&quot;]
     },
     {
-      id: &quot;delfy&quot;, name: &quot;Delfy&quot;, region: &quot;Fokida, Grecja Środkowa&quot;,
+      id: &quot;delfy&quot;, coords: [38.4824, 22.5010], name: &quot;Delfy&quot;, region: &quot;Fokida, Grecja Środkowa&quot;,
       categories: [&quot;Zabytki&quot;], emoji: &quot;🏺&quot;, colors: [&quot;#2a6fb5&quot;, &quot;#d9c58a&quot;],
       desc: &quot;Starożytne sanktuarium Apollina u stóp góry Parnas. Przez wieki przybywali tu władcy i zwykli ludzie, by zasięgnąć rady wyroczni. Na terenie stanowiska stoją m.in. teatr, stadion i Skarbiec Ateńczyków.&quot;,
       fact: &quot;Starożytni Grecy uważali Delfy za „pępek świata”. Pamiątką po tym wierzeniu jest kamień zwany omfalosem.&quot;,
       tags: [&quot;Wyrocznia&quot;, &quot;Apollo&quot;, &quot;UNESCO&quot;, &quot;Mitologia&quot;]
     },
     {
-      id: &quot;navagio&quot;, name: &quot;Zatoka Navagio&quot;, region: &quot;Zakynthos, Wyspy Jońskie&quot;,
+      id: &quot;navagio&quot;, coords: [37.8596, 20.6244], name: &quot;Zatoka Navagio&quot;, region: &quot;Zakynthos, Wyspy Jońskie&quot;,
       categories: [&quot;Plaże&quot;, &quot;Przyroda&quot;], emoji: &quot;🏖️&quot;, colors: [&quot;#13a3c7&quot;, &quot;#e9f6f9&quot;],
       desc: &quot;Mała plaża otoczona wysokimi białymi klifami, z turkusową wodą. Z klifowego punktu widokowego widać całą zatokę, a na plażę najłatwiej dostać się łodzią.&quot;,
       fact: &quot;Zatoka nazywana jest też Plażą Wraku. Na piasku leży statek Panagiotis, który osiadł tu w 1980 roku.&quot;,
       tags: [&quot;Wrak&quot;, &quot;Wyspy Jońskie&quot;, &quot;Klify&quot;, &quot;Fotografia&quot;]
     },
     {
-      id: &quot;elafonisi&quot;, name: &quot;Elafonisi&quot;, region: &quot;Kreta, Chania&quot;,
+      id: &quot;elafonisi&quot;, coords: [35.2711, 23.5382], name: &quot;Elafonisi&quot;, region: &quot;Kreta, Chania&quot;,
       categories: [&quot;Plaże&quot;], emoji: &quot;🌊&quot;, colors: [&quot;#3fb8c9&quot;, &quot;#f4b6c2&quot;],
       desc: &quot;Laguna z płytką, ciepłą wodą i piaskiem, który w niektórych miejscach ma różowawy odcień. Przy niskim stanie wody można przejść pieszo na pobliską wysepkę.&quot;,
       fact: &quot;Różowy odcień piasku pochodzi od drobnych fragmentów muszli i koralowców.&quot;,
@@ -310,6 +359,111 @@
       desc: &quot;Zapiekanka z warstw bakłażana, ziemniaków i mielonego mięsa, przykryta kremowym sosem beszamelowym. Podawana na ciepło, najlepiej smakuje w rodzinnych tawernach.&quot;,
       fact: &quot;Grecką wersję z sosem beszamelowym spopularyzował w pierwszej połowie XX wieku kucharz Nikolaos Tselementes.&quot;,
       tags: [&quot;Tawerna&quot;, &quot;Bakłażan&quot;, &quot;Danie główne&quot;, &quot;Tradycja&quot;]
+    },
+    {
+      id: &quot;knossos&quot;, coords: [35.298, 25.163], name: &quot;Knossos&quot;, region: &quot;Kreta, Heraklion&quot;,
+      categories: [&quot;Zabytki&quot;], emoji: &quot;🐂&quot;, colors: [&quot;#b5532a&quot;, &quot;#f0c27a&quot;],
+      desc: &quot;Ruiny wielkiego pałacu Minojczyków, uznawanych za pierwszą wysoko rozwiniętą cywilizację Europy. Kolorowe freski i labiryntowy układ komnat przywołują mit o Minotaurze.&quot;,
+      fact: &quot;Wykopaliska w Knossos rozpoczął w 1900 roku brytyjski archeolog Arthur Evans.&quot;,
+      tags: [&quot;Minojczycy&quot;, &quot;Minotaur&quot;, &quot;Kreta&quot;, &quot;Freski&quot;]
+    },
+    {
+      id: &quot;olimpia&quot;, coords: [37.6384, 21.63], name: &quot;Olimpia&quot;, region: &quot;Peloponez, Elida&quot;,
+      categories: [&quot;Zabytki&quot;], emoji: &quot;🏅&quot;, colors: [&quot;#2f7d4f&quot;, &quot;#d8e9a8&quot;],
+      desc: &quot;Miejsce narodzin igrzysk olimpijskich. Można zobaczyć ruiny świątyni Zeusa, gimnazjon i stadion, na którym ścigali się starożytni atleci.&quot;,
+      fact: &quot;W Olimpii zapala się znicz olimpijski przed każdymi igrzyskami. Stanowisko jest na Liście UNESCO od 1989 roku.&quot;,
+      tags: [&quot;Igrzyska&quot;, &quot;Zeus&quot;, &quot;UNESCO&quot;, &quot;Stadion&quot;]
+    },
+    {
+      id: &quot;mykeny&quot;, coords: [37.7308, 22.7564], name: &quot;Mykeny&quot;, region: &quot;Peloponez, Argolida&quot;,
+      categories: [&quot;Zabytki&quot;], emoji: &quot;🦁&quot;, colors: [&quot;#6b5a3a&quot;, &quot;#d9c58a&quot;],
+      desc: &quot;Potężna twierdza z epoki brązu, według tradycji siedziba króla Agamemnona. Wejścia pilnuje Brama Lwic, a w pobliżu stoi monumentalny grobowiec zwany Skarbcem Atreusa.&quot;,
+      fact: &quot;W 1876 roku Heinrich Schliemann znalazł tu złotą maskę, nazwaną maską Agamemnona. Stanowisko jest na Liście UNESCO od 1999 roku.&quot;,
+      tags: [&quot;Epoka brązu&quot;, &quot;Agamemnon&quot;, &quot;Brama Lwic&quot;, &quot;UNESCO&quot;]
+    },
+    {
+      id: &quot;rodos&quot;, coords: [36.4426, 28.2278], name: &quot;Stare Miasto na Rodos&quot;, region: &quot;Rodos, Dodekanez&quot;,
+      categories: [&quot;Zabytki&quot;], emoji: &quot;🏰&quot;, colors: [&quot;#1d7fd1&quot;, &quot;#e7d3a1&quot;],
+      desc: &quot;Średniowieczne miasto otoczone potężnymi murami, które należało do rycerzy joannitów. Kręte uliczki prowadzą do Pałacu Wielkich Mistrzów i Ulicy Rycerskiej.&quot;,
+      fact: &quot;W starożytności na Rodos stał Kolos, jeden z siedmiu cudów świata. Zniszczyło go trzęsienie ziemi około 226 roku p.n.e.&quot;,
+      tags: [&quot;Joannici&quot;, &quot;Mury&quot;, &quot;UNESCO&quot;, &quot;Dodekanez&quot;]
+    },
+    {
+      id: &quot;samaria&quot;, coords: [35.30, 23.96], name: &quot;Wąwóz Samaria&quot;, region: &quot;Kreta, Chania&quot;,
+      categories: [&quot;Przyroda&quot;], emoji: &quot;🥾&quot;, colors: [&quot;#3d7a4a&quot;, &quot;#a9c99a&quot;],
+      desc: &quot;Jeden z najsłynniejszych szlaków trekkingowych Grecji, prowadzący przez park narodowy w Górach Białych. Trasa ma około 16 km i kończy się w nadmorskiej wiosce Agia Roumeli. Wąwóz jest otwarty zwykle od późnej wiosny do jesieni.&quot;,
+      fact: &quot;W najwęższym miejscu, zwanym Żelazną Bramą, ściany wąwozu dzieli zaledwie kilka metrów.&quot;,
+      tags: [&quot;Trekking&quot;, &quot;Park narodowy&quot;, &quot;Kreta&quot;, &quot;Wąwóz&quot;]
+    },
+    {
+      id: &quot;olimp&quot;, coords: [40.0856, 22.3584], name: &quot;Góra Olimp&quot;, region: &quot;Macedonia, Pieria&quot;,
+      categories: [&quot;Przyroda&quot;], emoji: &quot;🏔️&quot;, colors: [&quot;#0a2a4f&quot;, &quot;#8fb4dc&quot;],
+      desc: &quot;Najwyższy szczyt Grecji, Mytikas, ma 2917 m n.p.m. Szlaki z miejscowości Litochoro prowadzą do schronisk, a najwyższe partie są dla doświadczonych turystów.&quot;,
+      fact: &quot;W mitologii na Olimpie mieszkało dwunastu głównych bogów, z Zeusem na czele. Masyw jest pierwszym parkiem narodowym Grecji, utworzonym w 1938 roku.&quot;,
+      tags: [&quot;Bogowie&quot;, &quot;Trekking&quot;, &quot;Mytikas&quot;, &quot;Park narodowy&quot;]
+    },
+    {
+      id: &quot;myrtos&quot;, coords: [38.335, 20.541], name: &quot;Plaża Myrtos&quot;, region: &quot;Kefalonia, Wyspy Jońskie&quot;,
+      categories: [&quot;Plaże&quot;, &quot;Przyroda&quot;], emoji: &quot;🏝️&quot;, colors: [&quot;#13a3c7&quot;, &quot;#cfeef5&quot;],
+      desc: &quot;Półksiężycowata plaża pod stromymi, białymi klifami, z turkusową wodą. Zamiast piasku pokrywają ją drobne jasne kamyki, a z punktu widokowego przy drodze widać całą zatokę.&quot;,
+      fact: &quot;Kefalonię w 1953 roku nawiedziło trzęsienie ziemi, które zniszczyło wiele miast i wsi na wyspie.&quot;,
+      tags: [&quot;Kamyki&quot;, &quot;Klify&quot;, &quot;Wyspy Jońskie&quot;, &quot;Widoki&quot;]
+    },
+    {
+      id: &quot;mistras&quot;, coords: [37.0733, 22.3667], name: &quot;Mistras&quot;, region: &quot;Peloponez, Lakonia&quot;,
+      categories: [&quot;Zabytki&quot;], emoji: &quot;⛪&quot;, colors: [&quot;#8a3b3b&quot;, &quot;#e8c9a0&quot;],
+      desc: &quot;Opuszczone bizantyjskie miasto na zboczu góry koło Sparty, z ruinami pałaców, kościołów i klasztorów pokrytych freskami. Warto zabrać wodę i wygodne buty.&quot;,
+      fact: &quot;W XIV i XV wieku Mistras był ważnym ośrodkiem kultury bizantyjskiej. Od 1989 roku jest na Liście UNESCO.&quot;,
+      tags: [&quot;Bizancjum&quot;, &quot;Freski&quot;, &quot;UNESCO&quot;, &quot;Peloponez&quot;]
+    },
+    {
+      id: &quot;epidauros&quot;, coords: [37.5967, 23.079], name: &quot;Teatr w Epidauros&quot;, region: &quot;Peloponez, Argolida&quot;,
+      categories: [&quot;Zabytki&quot;], emoji: &quot;🎭&quot;, colors: [&quot;#8a5a9e&quot;, &quot;#e8d4f0&quot;],
+      desc: &quot;Dobrze zachowany antyczny teatr z IV wieku p.n.e., który mieści około 14 tysięcy widzów. Do dziś odbywają się tu przedstawienia, zwłaszcza latem podczas festiwalu.&quot;,
+      fact: &quot;Teatr słynie z akustyki: z ostatnich rzędów słychać głos aktora stojącego na scenie. Całe sanktuarium Asklepiosa wpisano na Listę UNESCO w 1988 roku.&quot;,
+      tags: [&quot;Teatr&quot;, &quot;Asklepios&quot;, &quot;UNESCO&quot;, &quot;Akustyka&quot;]
+    },
+    {
+      id: &quot;delos&quot;, coords: [37.396, 25.268], name: &quot;Delos&quot;, region: &quot;Cyklady, Morze Egejskie&quot;,
+      categories: [&quot;Zabytki&quot;], emoji: &quot;☀️&quot;, colors: [&quot;#f2b632&quot;, &quot;#fff3c9&quot;],
+      desc: &quot;Niewielka, dziś niezamieszkana wyspa, w starożytności jedno z najważniejszych sanktuariów świata greckiego. Można zobaczyć ruiny świątyń, domy z mozaikami i Taras Lwów. Dopłynąć można tylko łodzią, najczęściej z Mykonos.&quot;,
+      fact: &quot;Według mitu na Delos urodzili się Apollo i Artemida. W starożytności na wyspie nie wolno było rodzić ani umierać. Stanowisko jest na Liście UNESCO od 1990 roku.&quot;,
+      tags: [&quot;Apollo&quot;, &quot;Mozaiki&quot;, &quot;UNESCO&quot;, &quot;Cyklady&quot;]
+    },
+    {
+      id: &quot;saloniki&quot;, coords: [40.6264, 22.9484], name: &quot;Saloniki i Biała Wieża&quot;, region: &quot;Saloniki, Macedonia&quot;,
+      categories: [&quot;Zabytki&quot;], emoji: &quot;🗼&quot;, colors: [&quot;#2f6fb0&quot;, &quot;#cfe0f3&quot;],
+      desc: &quot;Drugie co do wielkości miasto Grecji, z nadmorską promenadą i Białą Wieżą, symbolem miasta. Wieża pochodzi z XV wieku i mieści muzeum poświęcone historii Salonik.&quot;,
+      fact: &quot;Saloniki założył w 315 roku p.n.e. Kassander. Nazwał je na cześć żony, Thessaloniki, przyrodniej siostry Aleksandra Wielkiego.&quot;,
+      tags: [&quot;Macedonia&quot;, &quot;Promenada&quot;, &quot;Bizancjum&quot;, &quot;Miasto&quot;]
+    },
+    {
+      id: &quot;vikos&quot;, coords: [39.96, 20.74], name: &quot;Wąwóz Vikos&quot;, region: &quot;Epir, Zagoria&quot;,
+      categories: [&quot;Przyroda&quot;], emoji: &quot;🌲&quot;, colors: [&quot;#2f6b4f&quot;, &quot;#a7c9a0&quot;],
+      desc: &quot;Głęboki wąwóz w górach Pindos, w Parku Narodowym Vikos–Aoos. Z punktów widokowych koło wsi Monodendri widać całą dolinę, a szlak prowadzi dnem wąwozu.&quot;,
+      fact: &quot;Okolica, zwana Zagoria, słynie z kamiennych wsi i łukowych mostów z XVIII i XIX wieku.&quot;,
+      tags: [&quot;Pindos&quot;, &quot;Trekking&quot;, &quot;Kamienne mosty&quot;, &quot;Zagoria&quot;]
+    },
+    {
+      id: &quot;voidokilia&quot;, coords: [36.9547, 21.6555], name: &quot;Zatoka Voidokilia&quot;, region: &quot;Mesenia, Peloponez&quot;,
+      categories: [&quot;Plaże&quot;, &quot;Przyroda&quot;], emoji: &quot;🐚&quot;, colors: [&quot;#14a0b5&quot;, &quot;#f6e9c8&quot;],
+      desc: &quot;Piaszczysta plaża w kształcie litery omega nad zatoką Navarino, z płytką, spokojną wodą. Na wzgórzu przy plaży stoją ruiny zamku Paleokastro, a w pobliżu można zwiedzić Pałac Nestora.&quot;,
+      fact: &quot;Pałac Nestora, bohatera Iliady, to jeden z najlepiej zachowanych pałaców z epoki mykeńskiej w Grecji.&quot;,
+      tags: [&quot;Omega&quot;, &quot;Zamek&quot;, &quot;Laguna&quot;, &quot;Peloponez&quot;]
+    },
+    {
+      id: &quot;horiatiki&quot;, name: &quot;Sałatka grecka&quot;, region: &quot;Cała Grecja&quot;,
+      categories: [&quot;Jedzenie&quot;], emoji: &quot;🥗&quot;, colors: [&quot;#2e9e5b&quot;, &quot;#f6d365&quot;],
+      desc: &quot;Pomidory, ogórek, cebula, oliwki i kawałek fety, polane oliwą z oliwek. Prosta, orzeźwiająca i idealna na upalny dzień.&quot;,
+      fact: &quot;Grecka nazwa „horiatiki” oznacza „wiejska”. W tradycyjnej wersji nie ma w niej sałaty.&quot;,
+      tags: [&quot;Feta&quot;, &quot;Oliwa&quot;, &quot;Lekkie&quot;, &quot;Tawerna&quot;]
+    },
+    {
+      id: &quot;baklawa&quot;, name: &quot;Baklawa&quot;, region: &quot;Cała Grecja&quot;,
+      categories: [&quot;Jedzenie&quot;], emoji: &quot;🍯&quot;, colors: [&quot;#d9962b&quot;, &quot;#f7e0a3&quot;],
+      desc: &quot;Słodkie ciasto z cienkich warstw ciasta filo, siekanych orzechów i syropu lub miodu. Najlepiej smakuje w cukierni, do greckiej kawy.&quot;,
+      fact: &quot;Baklawa jest popularna w całym wschodnim regionie Morza Śródziemnego, a każdy kraj ma własną wersję przepisu.&quot;,
+      tags: [&quot;Deser&quot;, &quot;Miód&quot;, &quot;Orzechy&quot;, &quot;Cukiernia&quot;]
     }
   ];
 
@@ -422,6 +576,7 @@
 
     // Licznik wyników i komunikat o braku wyników
     countEl.textContent = `Znalezione miejsca: ${list.length} z ${PLACES.length}`;
+    renderMarkers(list);
     emptyEl.hidden = list.length > 0;
     if (!list.length) {
       emptyEl.textContent = activeFilter === &quot;Ulubione&quot; &amp;&amp; !query
@@ -452,6 +607,7 @@
     $(&quot;m-fact&quot;).textContent = p.fact;
     $(&quot;m-tags&quot;).innerHTML = p.tags.map((t) => `<span class=&quot;tag&quot;>#${t}</span>`).join(&quot;&quot;);
     renderFavButton();
+    $(&quot;m-map&quot;).hidden = !p.coords;   // dania nie mają lokalizacji
 
     document.body.classList.add(&quot;modal-open&quot;);
     modal.showModal();
@@ -486,7 +642,48 @@
   });
 
   /* =========================================================
-     9. START
+     9. MAPA (rysunek SVG, bez zewnętrznych bibliotek)
+     ========================================================= */
+  const pinsEl = $(&quot;pins&quot;);
+
+  // Zamiana współrzędnych geograficznych na pozycję w procentach
+  // (ta sama projekcja, której użyto do narysowania mapy)
+  const toX = (lon) => ((lon - 19.3) * 78.8) / 750 * 100;
+  const toY = (lat) => ((41.8 - lat) * 100) / 700 * 100;
+
+  // Rysuje znaczniki tylko dla miejsc widocznych po filtrowaniu
+  function renderMarkers(list) {
+    pinsEl.innerHTML = &quot;&quot;;
+    list.filter((p) => p.coords).forEach((p) => {
+      const pin = document.createElement(&quot;button&quot;);
+      pin.type = &quot;button&quot;;
+      pin.className = &quot;pin&quot;;
+      pin.dataset.id = p.id;
+      pin.dataset.name = p.name;
+      pin.style.left = toX(p.coords[1]) + &quot;%&quot;;
+      pin.style.top = toY(p.coords[0]) + &quot;%&quot;;
+      pin.setAttribute(&quot;aria-label&quot;, `Pokaż szczegóły: ${p.name}`);
+      pin.textContent = p.emoji;
+      pin.addEventListener(&quot;click&quot;, () => openModal(p.id));
+      pinsEl.appendChild(pin);
+    });
+  }
+
+  // Przycisk &quot;Pokaż na mapie&quot; w oknie szczegółów: przewija do mapy i podświetla znacznik
+  $(&quot;m-map&quot;).addEventListener(&quot;click&quot;, () => {
+    const id = openId;
+    closeModal();
+    if (!id) return;
+    $(&quot;map&quot;).scrollIntoView({ behavior: &quot;smooth&quot;, block: &quot;center&quot; });
+    const pin = pinsEl.querySelector(`[data-id=&quot;${id}&quot;]`);
+    if (pin) {
+      pin.classList.add(&quot;pulse&quot;);
+      setTimeout(() => pin.classList.remove(&quot;pulse&quot;), 2600);
+    }
+  });
+
+  /* =========================================================
+     10. START
      ========================================================= */
   render();
 })();
